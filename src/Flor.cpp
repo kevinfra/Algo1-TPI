@@ -69,11 +69,12 @@ void Flor::Mostrar(std::ostream& os){
 }
 
 void Flor::Guardar(std::ostream& os){
-	os << "{ F, " << this->_vida << " " << this->_cuantoPega << " " << "[ ";
+	os << "{ F " << this->_vida << " " << this->_cuantoPega << " [ ";
 	int i = 0;
 	int l = this->_habilidades.size();
 	while(i < l){
 		os << this->habilidades[i] << " ";
+		i++;
 	}
 	os << "] }";
 }

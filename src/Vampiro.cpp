@@ -33,6 +33,7 @@ void Vampiro::Mostrar(std::ostream& os)
 
 void Vampiro::Guardar(std::ostream& os)
 {
+  os << "{ V " << this->_clase << " " << this->_vida << " " << this->_cuantoPega << " }";
 }
 
 void Vampiro::Cargar(std::istream& is)
