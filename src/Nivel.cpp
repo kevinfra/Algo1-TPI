@@ -41,6 +41,87 @@ bool noHayFlorEnPos(std::vector<FlorEnJuego> flores, Posicion pos){
   return b;
 }
 
+int danoFlor(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
+  int cp = 0;
+  int v = 0;
+  int l = vampiros.size();
+  while(v < l){
+    if(vampiro[v].pos = flor.pos){
+      cp = cp + vampiros[v].vampiro.cuantoPegaV();
+    }
+    v++;
+  }
+  return cp;
+}
+
+bool hayVampiroEnPos(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
+  bool b = false;
+  int lv = vampiros.size();
+  int v = 0;
+  while(v < lv){
+    if(vampiros[v].pos == flor.pos){
+      b = true;
+    }
+    v++;
+  }
+  return b;
+}
+
+bool tieneHabilidad(Habilidad h, FlorEnJuego flor){
+  bool b = false;
+  int v = 0;
+  int lh = flor.flor.habilidadesF().size();
+  while(v < lh){
+    if(h == flor.flor.habilidadesF()[v]){
+      b = true;
+    }
+    v++;
+  }
+  return b;
+}
+
+bool florNoExplota(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
+  bool b = true;
+  if (tieneHabilidad(Explotar, flor.flor) && hayVampiroEnPos(flor, vampiros)){
+    b = false;
+  }
+  return b;
+}
+
+std::vector<FlorEnJuego> floresVivas(std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
+  std::vector<FlorEnJuego> nuevaListaFlores;
+  int l = flores.size();
+  int v = 0;
+  while(v < l){
+    if(florNoExplota(flores[v], vampiros) && flores[v].vida - danoFlor(flores[v], vampiros) > 0){
+      nuevaListaFlores.push_back(FlorEnJuego(flores[v].flor, flores[v].pos, flores[v].vida - danoFlor(flores[v], vampiros)));
+    }
+    v++;
+  }
+  return nuevaListaFlores;
+}
+
+void floresIguales(std::vector<FlorEnJuego> preFlores, std::vector<FlorEnJuego> flores){
+  int v = 0;
+  int lFlores = flores.size();
+  int lPreFlores = preFlores.size();
+  //Primero vacio la lista de pre(flores)
+  while(v < lPreFlores){
+    preFlores.pop_back();
+    v++
+  }
+  v = 0 ;
+  //Ahora empiezo a llenarla con los elementos de la lista flores que quiero
+  while(v < lFlores){
+    preFlores.push_back(flores[v]);
+    v++;
+  }
+}
+
+std::vector<VampiroEnJuego> vampirosVivos(std::vector<FlorEnJuego> preFlores, std::vector<VampiroEnJuego> preVampiros){
+  //TODO
+
+}
 
 Nivel::Nivel(){}
 
@@ -112,12 +193,9 @@ void Nivel::pasarTurno(){
     std::vector<FlorEnJuego> preFlores;
     int l = this->_flores.size();
     int v = 0;
-    while(v < l){
-      preFlores[v].push_back(this->_flores[v]);
-      v++;
-    }
-    this->_flores = floresVivas(this->_flores, this->_vampiros);
-    this->_vampiros = vampirosVivos(preFlores, this->_vampiros);
+    floresIguales(preFlores, this->_flores);
+    floresIguales(this->_flores, floresVivas(this->_flores, this->_vampiros));
+    vampirosIguales(this->_vampiros, vampirosVivos(preFlores, this->_vampiros));
     int vs=0;
     int ls = this->_spawning.size();
     if(ls > 0){
@@ -128,6 +206,7 @@ void Nivel::pasarTurno(){
         vs++;
       }
     }
+    this->_soles = this->_soles + solesGenerados(preFlores);
   }
 }
 
