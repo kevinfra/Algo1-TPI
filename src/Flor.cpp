@@ -96,6 +96,5 @@ void Flor::Guardar(std::ostream& os){
 }
 
 void Flor::Cargar(std::istream& is){
-	cin >> is;
-
+	
 }
