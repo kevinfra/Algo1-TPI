@@ -1,6 +1,5 @@
 #include "Flor.h"
 
-//Preguntar si puedo agregar funciones auxiliares sobre el cpp, o es como dice en el enunciado que los metodos se agregan en la parte privada
 //faltaria probar las auxiliares (en realidad todo)
 
 bool perteneceH(Habilidad h, std::vector<Habilidad> hs){
@@ -21,8 +20,8 @@ std::vector<Habilidad> sinRepetidosH(std::vector<Habilidad> hs){
 	std::vector<Habilidad> nhw;
 	int l = hs.size();
 	int i = 0;
-	if(l==0){
-		i=l;
+	if(l == 0){
+		nhw=hs;
 	}
 	while(i<l){
 		if(!perteneceH(hs[i],nhw)){
@@ -33,27 +32,44 @@ std::vector<Habilidad> sinRepetidosH(std::vector<Habilidad> hs){
 	return nhw;
 }
 
+bool vidaValidaF(Vida v, std::vector<Habilidad> habilidades){
+	bool b;
+	b = (v == (100 / (habilidades.size() + 1)));
+	return b;
+}
+
+bool cPegaValidoF(int cP, std::vector<Habilidad> habilidades){
+	bool b;
+	if(perteneceH(Atacar, habilidades)){
+		b = (cP == (12 / habilidades.size()));
+	}else{
+		b = (cP == 0);
+	}
+	return b;
+}
+
+string tipoHabilidad(Habilidad h){
+	string poder;
+	if(h==Generar){
+		poder="Generar";
+	}else if(h == Atacar){
+		poder="Atacar";
+	}else{
+		poder="Explotar";
+	}
+	return poder;
+}
+
 Flor::Flor(){}
 
-//Acá habría que agregar algo que te diga que la vida y el cuantoPega es incorrecto si difiere del requiere, para no romper los invariantes de la espec
 Flor::Flor(Vida v, int cP, std::vector<Habilidad> hs){
-	int i=0;
-	int l = sinRepetidosH(hs).size();
-	if(l==0){
-		i=l;
+	if(hs.size() == sinRepetidosH(hs).size() && vidaValidaF(v, hs) && cPegaValidoF(cP, hs)){
+		this->_habilidades = hs;
+		this->_vida = v;
+		this->_cuantoPega = cP;
 	}
-	while(i<l){
-		this->_habilidades.push_back(sinRepetidosH(hs)[i]);
-		i++;
-	}
-	this->_vida = (100 / (this->_habilidades.size() + 1));
-	if(perteneceH(Atacar, this->_habilidades)){
-		this->_cuantoPega = (12 / this->_habilidades.size());
-	}else{
-		this->_cuantoPega = 0;
-	}
-
 }
+
 Vida Flor::vidaF(){
 	return this->_vida;
 }
@@ -73,7 +89,7 @@ void Flor::Guardar(std::ostream& os){
 	int i = 0;
 	int l = this->_habilidades.size();
 	while(i < l){
-		os << this->habilidades[i] << " ";
+		os << tipoHabilidad(this->_habilidades[i]) << " ";
 		i++;
 	}
 	os << "] }";

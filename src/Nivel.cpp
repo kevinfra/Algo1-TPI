@@ -101,7 +101,7 @@ std::vector<FlorEnJuego> floresVivas(std::vector<FlorEnJuego> flores, std::vecto
   return nuevaListaFlores;
 }
 
-void floresIguales(std::vector<FlorEnJuego> preFlores, std::vector<FlorEnJuego> flores){
+void floresIguales(std::vector<FlorEnJuego>& preFlores, std::vector<FlorEnJuego> flores){
   int v = 0;
   int lFlores = flores.size();
   int lPreFlores = preFlores.size();
@@ -119,8 +119,51 @@ void floresIguales(std::vector<FlorEnJuego> preFlores, std::vector<FlorEnJuego> 
 }
 
 std::vector<VampiroEnJuego> vampirosVivos(std::vector<FlorEnJuego> preFlores, std::vector<VampiroEnJuego> preVampiros){
-  //TODO
 
+
+}
+
+int solesGenerados(std::vector<FlorEnJuego> preFlores){
+  int s = 1;
+  int v = 0
+  int lF = preFlores.size();
+  while(v < lF){
+    if(perteneceH(Generar, preFlores[v].habilidadesF())){
+      s++;
+    }
+    v++;
+  }
+  return s;
+}
+
+void actualizarSpawning(std::vector<VampiroEnEspera>& spaw, int turno){
+  std::vector<VampiroEnEspera> preSpaw = spaw;
+  int v = 0;
+  int largoSpaw = spaw.size();
+  while(v < largoSpaw){
+    spaw.pop_back();
+    v++;
+  }
+  v = 0;
+  while(v < largoSpaw){
+    if(preSpaw[v].turno >= turno){
+      spaw.push_back(preSpaw[v]);
+    }
+    v++;
+  }
+}
+
+bool vampiroEnColumnaCero(std::vector<VampiroEnJuego> vampiros){
+  int v = 0;
+  int largoVamps = vampiros.size();
+  bool b = false;
+  while(v < largoVamps){
+    if(vampiros[v].pos.y == 0){
+      b = true;
+    }
+    v++;
+  }
+  return b;
 }
 
 Nivel::Nivel(){}
@@ -145,10 +188,7 @@ Nivel::Nivel(int ancho, int alto, int soles, std::vector<VampiroEnEspera>& spawn
   int t = spawninglist.size();
   int v = 0;
   if(spawningValido(spawninglist, alto) && spawningOrdenado(spawninglist)){
-    while(v < t){
-      this->_spawning.push_back(spawninglist[v]);
-      v++;
-    }
+    this->_spawning = spawninglist;
   }
 }
 
@@ -197,21 +237,22 @@ void Nivel::pasarTurno(){
     floresIguales(this->_flores, floresVivas(this->_flores, this->_vampiros));
     vampirosIguales(this->_vampiros, vampirosVivos(preFlores, this->_vampiros));
     int vs=0;
-    int ls = this->_spawning.size();
-    if(ls > 0){
-      while(vs < ls){
-        if(this->_spawning[vs].turno < this->_turno){
-          this->_vampiros.push_back(VampiroEnJuego(this->_spawning[vs].vampiro, Posicion(this->_ancho,this->_spawning[vs].fila), this->_spawning[vs].vampiro.vidaV() ));
-        }
-        vs++;
+    int largoSpaw = this->_spawning.size();
+    while(vs < largoSpaw){
+      if(this->_spawning[vs].turno < this->_turno){
+        this->_vampiros.push_back(VampiroEnJuego(this->_spawning[vs].vampiro, Posicion(this->_ancho,this->_spawning[vs].fila), this->_spawning[vs].vampiro.vidaV() ));
       }
+      vs++;
     }
+    actualizarSpawning(this->_spawning, this->_turno);
     this->_soles = this->_soles + solesGenerados(preFlores);
   }
 }
 
-bool Nivel::terminado()
-{
+bool Nivel::terminado(){
+  bool b;
+  b = ( vampiroEnColumnaCero(this->_vampiros) || (this->_vampiros.empty() && this->_spawning.empty()) )
+  return b;
 }
 
 bool Nivel::obsesivoCompulsivo()
