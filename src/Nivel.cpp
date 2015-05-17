@@ -13,6 +13,7 @@ bool spawningOrdenado(std::vector<VampiroEnEspera>& spawninglist){
     }
     v++;
   }
+  return b;
 }
 
 bool spawningValido(std::vector<VampiroEnEspera>& spawninglist, int alto){
@@ -250,6 +251,56 @@ bool vampiroEnColumnaCero(std::vector<VampiroEnJuego> vampiros){
   return b;
 }
 
+bool floresDesordenadas(std::vector<FlorEnJuego> floresOrdenadas){
+  bool b = true;
+  int largoF = floresOrdenadas.size();
+  int v = 1;
+  while(v < largoF){
+    if(floresOrdenadas[v-1].pos.y <= floresOrdenadas[v].pos.y){
+      if(floresOrdenadas[v-1].pos.x <= floresOrdenadas[v].pos.x){
+        b = false;
+      }
+    }
+    v++;
+  }
+  return b;
+}
+
+void swapF(int a, int b, std::vector<FlorEnJuego>& floresOrdenadas){
+  FlorEnJuego florC = floresOrdenadas[a];
+  floresOrdenadas[a] = floresOrdenadas[b];
+  floresOrdenadas[b] = florC;
+}
+
+void ordenarFlores(std::vector<FlorEnJuego>& floresOrdenadas){
+  int b;
+  int largoFlores = floresOrdenadas.size();
+  while(floresDesordenadas(floresOrdenadas)){
+    b = 1;
+    while(b < largoFlores){
+      if((floresOrdenadas[b-1].pos.y > floresOrdenadas[b].pos.y) || ((floresOrdenadas[b-1].pos.y <= floresOrdenadas[b].pos.y) && (floresOrdenadas[b-1].pos.x > floresOrdenadas[b].pos.x))){
+        swapF(b-1, b, floresOrdenadas);
+      }
+      b++;
+    }
+  }
+}
+
+bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
+  bool b = false;
+  int v = 1;
+  int largoF = floresOrdenadas.size();
+  while(v < largoF-1){
+    if(((tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (!tieneHabilidad(Atacar, floresOrdenadas[v])) && (tieneHabilidad(Atacar, floresOrdenadas[v+1]))) || ((!tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (tieneHabilidad(Atacar, floresOrdenadas[v])) && (!tieneHabilidad(Atacar, floresOrdenadas[v+1])))){
+      b = true;
+      v++;
+    }else{
+      v = largoF;
+    }
+  }
+  return b;
+}
+
 Nivel::Nivel(){}
 
 Nivel::Nivel(int ancho, int alto, int soles, std::vector<VampiroEnEspera>& spawninglist){
@@ -339,8 +390,10 @@ bool Nivel::terminado(){
   return b;
 }
 
-bool Nivel::obsesivoCompulsivo()
-{
+bool Nivel::obsesivoCompulsivo(){
+  std::vector<FlorEnJuego> floresOrdenadas = this->_flores;
+  ordenarFlores(floresOrdenadas);
+  return hayPatron(floresOrdenadas);
 }
 
 void Nivel::Mostrar(std::ostream& os)
