@@ -5,6 +5,7 @@ bool spawningOrdenado(std::vector<VampiroEnEspera>& spawninglist){
   int v = 1;
   int l = spawninglist.size();
   bool b = false;
+  if(l == 1){b = true;}
   while(v < l){
     if(spawninglist[v-1].turno <= spawninglist[v].turno){
       if(spawninglist[v-1].fila <= spawninglist[v].fila){
@@ -208,9 +209,9 @@ std::vector<VampiroEnJuego> vampirosVivos(std::vector<FlorEnJuego> preFlores, st
   return vampiros;
 }
 
-int solesGenerados(std::vector<FlorEnJuego> preFlores){
-  int s = 1;
-  int v = 0
+int solesGenerados(std::vector<FlorEnJuego> preFlores, int preSoles){
+  int s = preSoles+1;
+  int v = 0;
   int lF = preFlores.size();
   while(v < lF){
     if(tieneHabilidad(Generar, preFlores[v])){
@@ -307,17 +308,17 @@ Nivel::Nivel(int ancho, int alto, int soles, std::vector<VampiroEnEspera>& spawn
   if(ancho>0){
     this->_ancho = ancho;
   }else{
-    cerr << "ancho no valido" << endl;
+    std::cerr << "ancho no valido" << std::endl;
   }
   if(alto > 0){
     this->_alto = alto;
   }else{
-    cerr << "alto no válido" << endl;
+    std::cerr << "alto no válido" << std::endl;
   }
   if(soles >= 0){
     this->_soles = soles;
   }else{
-    cerr << "cantidad de soles inválida" << endl;
+    std::cerr << "cantidad de soles inválida" << std::endl;
   }
   this->_turno = 0;
   int t = spawninglist.size();
@@ -363,14 +364,13 @@ void Nivel::agregarFlor(Flor f, Posicion p){
 }
 
 void Nivel::pasarTurno(){
-  if(!terminado){
+  if(!this->terminado()){
     this->_turno++;
     std::vector<FlorEnJuego> preFlores;
-    int l = this->_flores.size();
-    int v = 0;
     floresIguales(preFlores, this->_flores);
     floresIguales(this->_flores, floresVivas(this->_flores, this->_vampiros));
-    vampirosIguales(this->_vampiros, vampirosVivos(preFlores, this->_vampiros));
+    this->_vampiros = vampirosVivos(preFlores, this->_vampiros);
+    this->_soles = solesGenerados(preFlores, this->_soles);
     int vs=0;
     int largoSpaw = this->_spawning.size();
     while(vs < largoSpaw){
@@ -380,20 +380,25 @@ void Nivel::pasarTurno(){
       vs++;
     }
     actualizarSpawning(this->_spawning, this->_turno);
-    this->_soles = this->_soles + solesGenerados(preFlores);
   }
 }
 
 bool Nivel::terminado(){
   bool b;
-  b = ( vampiroEnColumnaCero(this->_vampiros) || (this->_vampiros.empty() && this->_spawning.empty()) )
+  b = ( vampiroEnColumnaCero(this->_vampiros) || (this->_vampiros.empty() && this->_spawning.empty()) );
   return b;
 }
 
 bool Nivel::obsesivoCompulsivo(){
-  std::vector<FlorEnJuego> floresOrdenadas = this->_flores;
-  ordenarFlores(floresOrdenadas);
-  return hayPatron(floresOrdenadas);
+  bool b;
+  if(this->_flores.size() < 2){
+    b = true;
+  }else{
+    std::vector<FlorEnJuego> floresOrdenadas = this->_flores;
+    ordenarFlores(floresOrdenadas);
+    b = hayPatron(floresOrdenadas);
+  }
+  return b;
 }
 
 void Nivel::Mostrar(std::ostream& os)

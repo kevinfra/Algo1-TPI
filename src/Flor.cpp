@@ -34,7 +34,9 @@ std::vector<Habilidad> sinRepetidosH(std::vector<Habilidad> hs){
 
 bool vidaValidaF(Vida v, std::vector<Habilidad> habilidades){
 	bool b;
-	b = (v == (100 / (habilidades.size() + 1)));
+	int lH = habilidades.size();
+	int valorRealVida = 100 / (lH + 1);
+	b = (v == valorRealVida);
 	return b;
 }
 
@@ -48,8 +50,8 @@ bool cPegaValidoF(int cP, std::vector<Habilidad> habilidades){
 	return b;
 }
 
-string tipoHabilidad(Habilidad h){
-	string poder;
+std::string tipoHabilidad(Habilidad h){
+	std::string poder;
 	if(h==Generar){
 		poder="Generar";
 	}else if(h == Atacar){
