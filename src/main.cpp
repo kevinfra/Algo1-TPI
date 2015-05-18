@@ -19,7 +19,7 @@ int main(){
   hab3.push_back(Explotar);
   hab3.push_back(Generar);
 
-  Flor f(25,0,hab3);
+  Flor f(33,0,hab3);
 
   cout << f.vidaF() << ' ' << f.cuantoPegaF() << endl;
 
@@ -44,7 +44,7 @@ int main(){
 
   cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;
 
-
+/*
   vector<Flor> fs;
   fs.push_back(f);
 
@@ -56,7 +56,7 @@ int main(){
   j.agregarNivel(n);
 
   cout << j.muyDeExactas() << endl;
-
+*/
 
 
 
@@ -69,19 +69,20 @@ int main(){
   Flor f1(100 / 3,6,hab2);
   assert (f1.vidaF() == 100/3);
   assert (f1.cuantoPegaF() == 6);
-  /*assert (f1.habilidadesF().size() == 2);
-  assert (f1.habilidadesF()[0] == Atacar);
-  assert (f1.habilidadesF()[1] == Generar);
-  */
-/*
-  cout << "la vida de flor1 es " << f1.vidaF() << endl;
+  assert (f1.habilidadesF().size() == 2);
+  assert (f1.habilidadesF()[0] == 1);
+  assert (f1.habilidadesF()[1] == 0);
+
   cout << "Flor esta bien" << endl;
 
   Vampiro v1(Caminante,50,30);
-  //assert (v1.claseV == Caminante);
+  assert (v1.claseV == 0);
   assert (v1.vidaV() == 50);
   assert (v1.cuantoPegaV() == 30);
-  cout << "Vampiro esta bien" << endl;
-  */
 
+  cout << "Vampiro esta bien" << endl;
+
+  Nivel n1(10,20,0,)
+*/
+  return 0;
 }
