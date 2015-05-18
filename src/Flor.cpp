@@ -96,5 +96,27 @@ void Flor::Guardar(std::ostream& os){
 }
 
 void Flor::Cargar(std::istream& is){
-	
+	string flor;
+	getline(is, flor, "{ F ");
+	getline(is, this->_vida, " ");
+	getline(is, this->_cuantoPega, " [ ");
+	string habF; 
+	while(habF != "]"){
+		
+		
+		getline(is, habF, " ");
+		
+		if(habF != "]"){
+			if(habF == "Atacar"){
+				
+				this->_habilidades.push_back(Atacar);
+			}
+			if(habF == "Explotar"){
+				this->_habilidades.push_back(Explotar);
+			}
+			if(habF == "Generar"){
+				this->_habilidades.push_back(Generar);
+			} 
+		}
+	}
 }

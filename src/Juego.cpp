@@ -175,21 +175,44 @@ void Juego::Guardar(std::ostream& os)
 		j++;	
 	}
 	os << "] [ ";
+	
 	int n = 0;
 	int lNiveles = this->_niveles.size();
 	while(n < lNiveles){
 		os << "{ N " << this->_niveles[n].anchoN() << " " << this->_niveles[n].altoN() << " " << this->_niveles[n].turnoN() << " " << this->_niveles[n].solesN() << " [ ";
-		int m = 0;
-		int lHabilidadesFloresNiveles = this->_niveles[n].habilidadesF().size();
-		while (m < lHabilidadesFloresNiveles){
-			oss << this->_niveles[n].habilidadesF()[m] << " ";
-			m++;
-		} 
-		os << "] } ";
-		//falta la lista de vampiros en juego!!!
-		n++;
+	int f = 0;
+	int lFlores = this->floresN().size();
+	while (f < lFores){
+		os << "( { F " << this->_flores[f].vidaF() << " " << this->_flores[f].cuantoPegaF() << " [ ";
+		int h = 0;
+		int lHabilidadesFlores = this->_flores[f].habilidadesF().size();
+		while(h < lHabilidadesFlores){
+			os << this->_flores[f].habilidadesF()[h] << " ";
+			h++;
+		}
+		os << "] } ( " << this->_flores[f].pos.x << " " << this->_flores[f].pos.y " ) " << this->_flores[f].vida <<" ) ";
+		f++;
 	}
 	
+	os << "] [ ";
+	int v = 0;
+	int lVampiros = this->_vampiros.size();
+	while(v < lVampiros){
+		os << "( { V " << this->_vampiros[v].claseV() << " " << this->_vampiros[v].vidaV() << " " << this->_vampiros[v].cuantoPegaV() << " } ( " << this->_vampiros[v].pos.x; 
+		os << " " << this->_vampiros[v].pos.y << " ) " << this->_vampiros[v].vida << " ) ";
+		v++;	
+	}
+	os << "] [ ";
+	int s = 0;
+	int lSpawning = this->_spawning.size();
+	while(s < lSpawning){
+		os << "( { V " << this->_spawning[s].claseV() << " " << this->_spawning[s].vidaV() << " " << this->_spawning[s].cuantoPegaV() << " } " << this->_spawning[s].fila;
+		os << " " << this->__spawning[s].turno << " ) ";
+		s++;
+	}
+	os << "] }";
+		n++;
+	}
 }
 
 void Juego::Cargar(std::iostream& is)

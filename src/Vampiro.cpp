@@ -38,4 +38,17 @@ void Vampiro::Guardar(std::ostream& os)
 
 void Vampiro::Cargar(std::istream& is)
 {
+	string vampiro;
+	getline(is, vampiro, "{ V ");
+	string tipoV;
+	getline(is, tipoV, " ");
+	if(tipoV == "Caminante"){
+		this->_clase.push_back(Caminante);
+	}else if(tipoV == "Desviado"){
+		this->_clase.push_back(Desviado);
+	}
+	
+	getline(is, this->_vida, " ");
+	getline(is, this->_cuantoPega, " ");
+	
 }
