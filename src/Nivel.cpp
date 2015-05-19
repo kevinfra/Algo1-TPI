@@ -291,6 +291,9 @@ bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
   bool b = false;
   int v = 1;
   int largoF = floresOrdenadas.size();
+  if(largoF == 2 && (tieneHabilidad(Atacar, floresOrdenadas[0]) && !tieneHabilidad(Atacar, floresOrdenadas[1])) || (!tieneHabilidad(Atacar, floresOrdenadas[0]) && tieneHabilidad(Atacar, floresOrdenadas[1]))){
+    b = true;
+  }
   while(v < largoF-1){
     if(((tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (!tieneHabilidad(Atacar, floresOrdenadas[v])) && (tieneHabilidad(Atacar, floresOrdenadas[v+1]))) || ((!tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (tieneHabilidad(Atacar, floresOrdenadas[v])) && (!tieneHabilidad(Atacar, floresOrdenadas[v+1])))){
       b = true;
@@ -405,7 +408,7 @@ void Nivel::Mostrar(std::ostream& os)
 {
 }
 
-void Nivel::Guardar(std::ostream& os)
+/*void Nivel::Guardar(std::ostream& os)
 {
 	os << "{ N " << this->anchoN() << " " << this->altoN() << " " << this->turnoN() << " " << this->solesN() << " [ ";
 	int i = 0;
@@ -421,14 +424,14 @@ void Nivel::Guardar(std::ostream& os)
 		os << "] } ( " << this->_flores[i].pos.x << " " << this->_flores[i].pos.y " ) " << this->_flores[i].vida <<" ) ";
 		i++;
 	}
-	
+
 	os << "] [ ";
 	int j = 0;
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
-		os << "( { V " << this->_vampiros[j].claseV() << " " << this->_vampiros[j].vidaV() << " " << this->_vampiros[j].cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x; 
+		os << "( { V " << this->_vampiros[j].claseV() << " " << this->_vampiros[j].vidaV() << " " << this->_vampiros[j].cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x;
 		os << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
-		j++;	
+		j++;
 	}
 	os << "] [ ";
 	int s = 0;
@@ -443,3 +446,4 @@ void Nivel::Guardar(std::ostream& os)
 void Nivel::Cargar(std::istream& is)
 {
 }
+*/
