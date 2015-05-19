@@ -131,7 +131,7 @@ Juego::Juego(std::vector<Flor>& flores, std::vector<Vampiro>& vamps)
 	//Preguntar como hacer para que la lista de niveles se cree vacia
 	//std::vector<Nivel> nivelesVacios;
 	this->_niveles = std::vector<Nivel>();
-	this->nivelActual = 0;
+	this->_nivelActual = 0;
 	int i=0;
 	int l = sinRepetidosV(vamps).size();
 	while(i<l){
