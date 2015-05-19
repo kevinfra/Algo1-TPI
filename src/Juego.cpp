@@ -87,7 +87,7 @@ std::vector<int> nivelesGanados(std::vector<Nivel> niveles){
 	std::vector<int> ganados;
 	int i = 0;
 	int niv = niveles.size();
-	while(i<n){
+	while(i<niv){
         if(niveles[i].vampirosN().size() == 0 && niveles[i].spawningN().size() == 0){
         	ganados.push_back(i);
         }
@@ -96,6 +96,31 @@ std::vector<int> nivelesGanados(std::vector<Nivel> niveles){
 	return ganados;
 }
 
+int maxSoles(std::vector<Nivel> niveles){
+     int max = 0;
+     int i = 0;
+     int cantNiveles = niveles.size();
+     while(i<cantNiveles){
+        if(niveles[i].solesN() > max){
+          max = niveles[i].solesN();
+        }
+        i++;
+     }
+     return max;
+}
+
+int maxFloresmaxSoles(std::vector<Nivel> niveles, int soles){
+	 int max = 0;
+     int i = 0;
+     int cantNiveles = niveles.size();
+     while(i<cantNiveles){
+        if(niveles[i].solesN() == soles && niveles[i].floresN().size() > max){
+          max = niveles[i].floresN().size();
+        }
+        i++;
+     }
+     return max;
+}
 
 Juego::Juego()
 {
@@ -129,7 +154,7 @@ int Juego::nivelActual()
 
 void Juego::pasarNivel()
 {
-	this->nivelActual++;
+	this->_nivelActual++;
 }
 
 std::vector<Flor>& Juego::floresJ()
@@ -158,7 +183,17 @@ void Juego::agregarNivel(Nivel& n)
 
 std::vector<Nivel> Juego::estosSaleFacil()
 {
-	
+	int _maxSoles = maxSoles(this->_niveles);
+	int _maxFloresmaxSoles = maxFloresmaxSoles(this->_niveles,_maxSoles);
+    std::vector<Nivel> nivelesFaciles;
+    int i = 0;
+    int cantNiveles = this->_niveles.size();
+    while(i<cantNiveles){
+       if(this->_niveles[i].solesN() == _maxSoles && this->_niveles[i].floresN().size() == _maxFloresmaxSoles){
+           nivelesFaciles.push_back(this->_niveles[i]);
+       }
+    }
+    return nivelesFaciles;
 }
 
 void Juego::altoCheat(int n)
@@ -166,9 +201,9 @@ void Juego::altoCheat(int n)
 	int i = 0;
 	int vampiros = this->_niveles[n].vampirosN().size();
     while(i<vampiros){
-        if(this->niveles[n].vampirosN()[i].vida > 1){
-           this->niveles[n].vampirosN()[i].vida = 
-           this->niveles[n].vampirosN()[i].vida / 2;
+        if(this->_niveles[n].vampirosN()[i].vida > 1){
+           this->_niveles[n].vampirosN()[i].vida = 
+           this->_niveles[n].vampirosN()[i].vida / 2;
         }
     	i++;
     }
@@ -189,7 +224,7 @@ bool Juego::muyDeExactas()
     	esFibonacci = true;
     	int niveles = ganados.size();
     	while(i<niveles){
-            if(!(ganados[i] == ganados[i-1] + ganados[i-2])
+            if(!(ganados[i] == ganados[i-1] + ganados[i-2]))
               {
               	esFibonacci = false;
               }
