@@ -98,15 +98,21 @@ void Flor::Guardar(std::ostream& os){
 }
 
 void Flor::Cargar(std::istream& is){
-	string flor;
-	getline(is, flor, "{ F ");
-	getline(is, this->_vida, " ");
-	getline(is, this->_cuantoPega, " [ ");
-	string habF; 
+	std::string flor;
+	getline(is, flor, 'F');
+	getline(is, flor, ' ');
+	std::string vidaC;
+	getline(is, vidaC, ' ');
+	this->_vida = std::stoi(vidaC);
+	std::string cuantoPegaC;
+	getline(is, cuantoPegaC, '[');
+	this->_cuantoPega = std::stoi(cuantoPegaC);
+	getline(is, flor, ' ');
+	std::string habF; 
 	while(habF != "]"){
 		
 		
-		getline(is, habF, " ");
+		getline(is, habF, ' ');
 		
 		if(habF != "]"){
 			if(habF == "Atacar"){
