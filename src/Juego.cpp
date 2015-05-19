@@ -5,7 +5,7 @@ bool perteneceV(Vampiro v, std::vector<Vampiro> vamps){
 	int l = vamps.size();
 	int i = 0;
 	while(i<l){
-		if(v == vamps[i]){
+		if(v.vidaV() == vamps[i].vidaV() && v.cuantoPegaV() == vamps[i].cuantoPegaV() && v.claseV() == vamps[i].claseV()){
 			b = true;
 		}
 		i++;
@@ -157,11 +157,11 @@ void Juego::Guardar(std::ostream& os)
 	int i = 0;
 	int lFores = this->_flores.size(); 
 	while (i < lFores){
-		os << "{ F " << this->_flores[i].vidaF() << " " << this->_flores[i].cuantoPegaF() << " [ ";
+		os << "{ F " << this->_flores[i].flor.vidaF() << " " << this->_flores[i].flor.cuantoPegaF() << " [ ";
 		int k = 0;
-		int lHabilidadesFlores = this->_flores[i].habilidadesF().size();
+		int lHabilidadesFlores = this->_flores[i].flor.habilidadesF().size();
 		while(k < lHabilidadesFlores){
-			os << this->_flores[i].habilidadesF()[k] << " ";
+			os << this->_flores[i].flor.habilidadesF()[k] << " ";
 			k++;
 		}
 		os << "] } ";
@@ -171,7 +171,7 @@ void Juego::Guardar(std::ostream& os)
 	int j = 0;
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
-		os << "{ V " << this->_vampiros[j].claseV() << " " << this->_vampiros[j].vidaV() << " " << this->_vampiros[j].cuantoPegaV() << " ";
+		os << "{ V " << this->_vampiros[j].vampiro.claseV() << " " << this->_vampiros[j].vampiro.vidaV() << " " << this->_vampiros[j].vampiro.cuantoPegaV() << " ";
 		j++;	
 	}
 	os << "] [ ";
@@ -207,7 +207,7 @@ void Juego::Guardar(std::ostream& os)
 	int lSpawning = this->_spawning.size();
 	while(s < lSpawning){
 		os << "( { V " << this->_spawning[s].claseV() << " " << this->_spawning[s].vidaV() << " " << this->_spawning[s].cuantoPegaV() << " } " << this->_spawning[s].fila;
-		os << " " << this->__spawning[s].turno << " ) ";
+		os << " " << this->_spawning[s].turno << " ) ";
 		s++;
 	}
 	os << "] }";
