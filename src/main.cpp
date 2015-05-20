@@ -44,7 +44,6 @@ int main(){
 
   cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;
 
-/*
   vector<Flor> fs;
   fs.push_back(f);
 
@@ -56,7 +55,32 @@ int main(){
   j.agregarNivel(n);
 
   cout << j.muyDeExactas() << endl;
-*/
+
+  cout << j.nivelesJ().size() << endl;
+
+  cout << "ingrese archivo para guardar flor" << endl;
+
+  string in;
+
+  cin >> in;
+
+  ofstream guardado(in);
+
+  f.Guardar(guardado);
+
+  cout << "flor guardada" << endl;
+
+  cout << "ingrese nombre del archivo para guardar juego" << endl;
+
+  string inJ;
+
+  cin >> inJ;
+
+  ofstream guardarJ(inJ);
+
+  j.Guardar(guardarJ);
+
+  cout << "juego guardado" << endl;
 
 
 
