@@ -442,5 +442,57 @@ void Nivel::Guardar(std::ostream& os)
 
 void Nivel::Cargar(std::istream& is)
 {
+  std::string nivel;
+  getline(is, nivel, 'N');
+  getline(is, nivel, ' ');
+  std::string anchoN;
+  getline(is, anchoN, ' ');
+  this->_ancho = std::stoi(anchoN);
+  std::string altoN;
+  getline(is, altoN, ' ');
+  this->_alto = std::stoi(altoN);
+  std::string turnoN;
+  getline(is, turnoN, ' ');
+  this->_turno = std::stoi(turnoN);
+  std::string solesN;
+  getline(is, solesN, ' ');
+  this->_soles = std::stoi(solesN);
+  std::string basura;
+  getline(is, basura, '{');
+  getline(is, basura, ' ');
+  int i = 0;
+  int listaFloresN = this->_flores.size();
+  while(i < listaFloresN) {
+    std::string flor;
+    getline(is, flor, 'F');
+    getline(is, flor, ' ');
+    std::string vidaC;
+    getline(is, vidaC, ' ');    
+    this->_flores[i]. //FALTA TERMINAR
+    std::string cuantoPegaC;
+    getline(is, cuantoPegaC, '[');
+    this->_flores[i].Flor.cP = std::stoi(cuantoPegaC);
+    getline(is, flor, ' ');
+    std::string habF; 
+    while(habF != "]"){
+      
+      
+      getline(is, habF, ' ');
+      
+      if(habF != "]"){
+        if(habF == "Atacar"){
+          
+          this->_flores[i].flor.habilidadesF().push_back(Atacar);
+        }
+        if(habF == "Explotar"){
+          this->_flores[i].flor.habilidadesF().push_back(Explotar);
+        }
+        if(habF == "Generar"){
+          this->_flores[i].flor.habilidadesF().push_back(Generar);
+        } 
+      }
+    }
+    i++;
+  }
 
 }
