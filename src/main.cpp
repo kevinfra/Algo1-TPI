@@ -21,14 +21,20 @@ int main(){
 
   Flor f(33,0,hab3);
 
+  Flor f1(33,6,hab2);
+
   cout << f.vidaF() << ' ' << f.cuantoPegaF() << endl;
 
   Vampiro v(Caminante,50,50);
+
+  Vampiro v1(Caminante,100,100);
 
   cout << v.vidaV() << ' ' << v.cuantoPegaV() << endl;
 
   vector<VampiroEnEspera> spawn;
   spawn.push_back(VampiroEnEspera(v,2,2));
+
+  spawn.push_back(VampiroEnEspera(v1,3,3));
 
   Nivel n(5,5,100,spawn);
 
@@ -36,11 +42,15 @@ int main(){
 
   n.agregarFlor(f, Posicion(2,2));
 
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+
   cout << n.solesN() << endl;
 
   n.pasarTurno();
 
   cout << n.solesN() << endl;
+
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
 
   cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;
 
@@ -58,32 +68,115 @@ int main(){
 
   cout << j.nivelesJ().size() << endl;
 
-  cout << "ingrese archivo para guardar flor" << endl;
+  // cout << "ingrese archivo para guardar flor" << endl;
 
-  string in;
+  // string in;
 
-  cin >> in;
+  // cin >> in;
 
-  ofstream guardado(in);
+  // ofstream guardado(in);
 
-  f.Guardar(guardado);
+  // f.Guardar(guardado);
 
-  cout << "flor guardada" << endl;
+  // cout << "flor guardada" << endl;
 
-  cout << "ingrese nombre del archivo para guardar juego" << endl;
+  // cout << "ingrese nombre del archivo para guardar juego" << endl;
 
-  string inJ;
+  // string inJ;
 
-  cin >> inJ;
+  // cin >> inJ;
 
-  ofstream guardarJ(inJ);
+  // ofstream guardarJ(inJ);
 
-  j.Guardar(guardarJ);
+  // j.Guardar(guardarJ);
 
-  cout << "juego guardado" << endl;
+  // cout << "juego guardado" << endl;
+
+  n.pasarTurno();
+
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+
+  cout << n.obsesivoCompulsivo() << endl;  
+
+  n.agregarFlor(f1, Posicion(1,3));
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+
+  n.pasarTurno();
+
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+
+  cout << n.terminado() << endl;
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+
+  cout << n.obsesivoCompulsivo() << endl;  
+
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+
+  n.pasarTurno();
+
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+
+  n.pasarTurno();
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+  
+  n.pasarTurno();
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+
+  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
+
+  n.pasarTurno();
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+  
+  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
+  n.pasarTurno();
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+  
+  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
+  n.pasarTurno();
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+  
+  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
+n.pasarTurno();
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
+
+  n.pasarTurno();
+
+  cout << "el largo de flores es: " << n.floresN().size() << endl;
+  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;
 
 
-
+  int pases=0;
+  while(n.terminado() == false){
+    n.pasarTurno();
+    pases++;
+    cout << "Paso " << pases << " veces" << endl;
+  }  
+  
 
 
 
