@@ -1,4 +1,4 @@
-#include "Nivel.h"
+﻿#include "Nivel.h"
 #include <cmath>
 
 bool spawningOrdenado(std::vector<VampiroEnEspera>& spawninglist){
@@ -253,13 +253,18 @@ bool vampiroEnColumnaCero(std::vector<VampiroEnJuego> vampiros){
 }
 
 bool floresDesordenadas(std::vector<FlorEnJuego> floresOrdenadas){
-  bool b = true;
+  bool b;
   int largoF = floresOrdenadas.size();
   int v = 1;
   while(v < largoF){
     if(floresOrdenadas[v-1].pos.y <= floresOrdenadas[v].pos.y){
-      if(floresOrdenadas[v-1].pos.x <= floresOrdenadas[v].pos.x){
+      if((floresOrdenadas[v-1].pos.y == floresOrdenadas[v].pos.y) && floresOrdenadas[v-1].pos.x <= floresOrdenadas[v].pos.x){
         b = false;
+      }else if(floresOrdenadas[v-1].pos.y < floresOrdenadas[v].pos.y){
+        b = false;
+      }else{
+        b = true;
+        v = largoF;
       }
     }
     v++;
@@ -279,7 +284,7 @@ void ordenarFlores(std::vector<FlorEnJuego>& floresOrdenadas){
   while(floresDesordenadas(floresOrdenadas)){
     b = 1;
     while(b < largoFlores){
-      if((floresOrdenadas[b-1].pos.y > floresOrdenadas[b].pos.y) || ((floresOrdenadas[b-1].pos.y <= floresOrdenadas[b].pos.y) && (floresOrdenadas[b-1].pos.x > floresOrdenadas[b].pos.x))){
+      if((floresOrdenadas[b-1].pos.y > floresOrdenadas[b].pos.y) || ((floresOrdenadas[b-1].pos.y == floresOrdenadas[b].pos.y) && (floresOrdenadas[b-1].pos.x > floresOrdenadas[b].pos.x))){
         swapF(b-1, b, floresOrdenadas);
       }
       b++;
@@ -291,10 +296,13 @@ bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
   bool b = false;
   int v = 1;
   int largoF = floresOrdenadas.size();
+  if(largoF == 2 && (tieneHabilidad(Atacar, floresOrdenadas[0]) && !tieneHabilidad(Atacar, floresOrdenadas[1])) || (!tieneHabilidad(Atacar, floresOrdenadas[0]) && tieneHabilidad(Atacar, floresOrdenadas[1]))){
+    b = true;
+    v = largoF;
+  }
   while(v < largoF-1){
     if(((tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (!tieneHabilidad(Atacar, floresOrdenadas[v])) && (tieneHabilidad(Atacar, floresOrdenadas[v+1]))) || ((!tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (tieneHabilidad(Atacar, floresOrdenadas[v])) && (!tieneHabilidad(Atacar, floresOrdenadas[v+1])))){
       b = true;
-      v++;
     }else{
       v = largoF;
     }
@@ -421,14 +429,15 @@ void Nivel::Guardar(std::ostream& os)
 		os << "] } ( " << this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " ) ";
 		i++;
 	}
-	
+
 	os << "] [ ";
 	int j = 0;
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
 		os << "( { V " << this->_vampiros[j].vampiro.claseV() << " " << this->_vampiros[j].vampiro.vidaV() << " " << this->_vampiros[j].vampiro.cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x; 
+
 		os << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
-		j++;	
+		j++;
 	}
 	os << "] [ ";
 	int s = 0;
@@ -440,7 +449,58 @@ void Nivel::Guardar(std::ostream& os)
 	os << "] }";
 }
 
-void Nivel::Cargar(std::istream& is)
-{
-
-}
+// void Nivel::Cargar(std::istream& is)
+// {
+//   std::string nivel;
+//   getline(is, nivel, 'N');
+//   getline(is, nivel, ' ');
+//   std::string anchoN;
+//   getline(is, anchoN, ' ');
+//   this->_ancho = std::stoi(anchoN);
+//   std::string altoN;
+//   getline(is, altoN, ' ');
+//   this->_alto = std::stoi(altoN);
+//   std::string turnoN;
+//   getline(is, turnoN, ' ');
+//   this->_turno = std::stoi(turnoN);
+//   std::string solesN;
+//   getline(is, solesN, ' ');
+//   this->_soles = std::stoi(solesN);
+//   std::string basura;
+//   getline(is, basura, '{');
+//   getline(is, basura, ' ');
+//   int i = 0;
+//   int listaFloresN = this->_flores.size();
+//   while(i < listaFloresN) {
+//     std::string flor;
+//     getline(is, flor, 'F');
+//     getline(is, flor, ' ');
+//     std::string vidaC;
+//     getline(is, vidaC, ' ');    
+//     this->_flores[i]. //FALTA TERMINAR
+//     std::string cuantoPegaC;
+//     getline(is, cuantoPegaC, '[');
+//     this->_flores[i].Flor.cP = std::stoi(cuantoPegaC);
+//     getline(is, flor, ' ');
+//     std::string habF; 
+//     while(habF != "]"){
+      
+      
+//       getline(is, habF, ' ');
+      
+//       if(habF != "]"){
+//         if(habF == "Atacar"){
+          
+//           this->_flores[i].flor.habilidadesF().push_back(Atacar);
+//         }
+//         if(habF == "Explotar"){
+//           this->_flores[i].flor.habilidadesF().push_back(Explotar);
+//         }
+//         if(habF == "Generar"){
+//           this->_flores[i].flor.habilidadesF().push_back(Generar);
+//         } 
+//       }
+//     }
+//     i++;
+//   }
+// }
