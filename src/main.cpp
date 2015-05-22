@@ -92,91 +92,38 @@ int main(){
 
   // cout << "juego guardado" << endl;
 
-  n.pasarTurno();
-
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-
-  cout << n.obsesivoCompulsivo() << endl;  
-
-  n.agregarFlor(f1, Posicion(1,3));
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-
-  n.pasarTurno();
-
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-
-  cout << n.terminado() << endl;
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-
-  cout << n.obsesivoCompulsivo() << endl;  
-
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-
-  n.pasarTurno();
-
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-
-  n.pasarTurno();
+  n.agregarFlor(f1, Posicion(3,3));
 
   cout << "el largo de flores es: " << n.floresN().size() << endl;
   cout << "el largo de spawning es: " << n.spawningN().size() << endl;
   cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-  
-  n.pasarTurno();
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-
-  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
-
-  n.pasarTurno();
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-  
-  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
-  n.pasarTurno();
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-  
-  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
-  n.pasarTurno();
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-  
-  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
-n.pasarTurno();
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
-
-  n.pasarTurno();
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-  cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;
-
 
   int pases=0;
   while(n.terminado() == false){
     n.pasarTurno();
     pases++;
     cout << "Paso " << pases << " veces" << endl;
-  }  
-  
+    cout << "el largo de flores es: " << n.floresN().size() << endl;
+    cout << "el largo de spawning es: " << n.spawningN().size() << endl;
+    cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
+    if(n.floresN().size() > 1){
+      cout << "La posicion de f es (" << n.floresN()[0].pos.x << "," << n.floresN()[0].pos.y << ")" << endl;
+      cout << "La posicion de f1 es (" << n.floresN()[1].pos.x << "," << n.floresN()[1].pos.y << ")" << endl;
+    }else if(n.floresN().size() == 1){
+      cout << "La posicion de f es (" << n.floresN()[0].pos.x << "," << n.floresN()[0].pos.y << ")" << endl;
+    }else{
+      cout << "no hay flores" << endl;
+    }
+    if(n.vampirosN().size() > 1){
+      cout << "La posicion de v es (" << n.vampirosN()[0].pos.x << "," << n.vampirosN()[0].pos.y << ")" << endl;
+      cout << "La posicion de v1 es (" << n.vampirosN()[1].pos.x << "," << n.vampirosN()[1].pos.y << ")" << endl;
+    }else if(n.vampirosN().size() == 1){
+      cout << "La posicion de v es (" << n.vampirosN()[0].pos.x << "," << n.vampirosN()[0].pos.y << ")" << endl;
+    }else{
+      cout << "no hay vampiros" << endl;
+    }
+  }
+
 
 
 

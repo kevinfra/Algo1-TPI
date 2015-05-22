@@ -1,0 +1,1 @@
+g++ main.cpp Nivel.cpp Juego.cpp Vampiro.cpp Flor.cpp -std=c++11
