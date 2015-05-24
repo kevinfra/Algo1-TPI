@@ -405,6 +405,10 @@ bool Nivel::obsesivoCompulsivo(){
   return b;
 }
 
+void comprarSoles(int n){
+  this->_soles = this->_soles + n;
+}
+
 void Nivel::Mostrar(std::ostream& os)
 {
 }
