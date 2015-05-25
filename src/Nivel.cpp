@@ -411,43 +411,100 @@ bool Nivel::obsesivoCompulsivo(){
 
 void Nivel::Mostrar(std::ostream& os)
 {
+  os << "Nivel {" << std::endl;
+  os << "Ancho : " << this->_ancho << std::endl;
+  os << "Alto : " << this->_alto << std::endl;
+  os << "Turno : " << this->_turno << std::endl;
+  os << "Soles : " << this->_soles << std::endl;
+  os << "Flores : { " << std::endl;
+  int i = 0;
+  int lFlores = this->_flores.size();
+  while (i < lFlores){
+    this->_flores[i].flor.Mostrar(std::cout);
+    i++;
+  }
+  os << "}" << std::endl;
+  os << "Vampiros : { " << std::endl;
+  int j = 0;
+  int lVampiros = this->_vampiros.size();
+  while(j < lVampiros){
+    this->_vampiros[j].vampiro.Mostrar(std::cout);
+    j++;
+  }
+  os << "}" << std::endl;
+  os << "Spawning : {" << std::endl;
+  int s = 0;
+  int lSpawning = this->_spawning.size();
+  while(s < lSpawning){
+    this->_spawning[s].vampiro.Mostrar(std::cout);
+    s++;
+  }
+  os << std::endl;
+  os << "}" << std::endl;
+  os << "}" << std::endl;
 }
 
 void Nivel::Guardar(std::ostream& os)
 {
-	os << "{ N " << this->anchoN() << " " << this->altoN() << " " << this->turnoN() << " " << this->solesN() << " [ ";
-	int i = 0;
-	int lFlores = this->floresN().size();
-	while (i < lFlores){
-		os << "( { F " << this->_flores[i].flor.vidaF() << " " << this->_flores[i].flor.cuantoPegaF() << " [ ";
-		int k = 0;
-		int lHabilidadesFlores = this->_flores[i].flor.habilidadesF().size();
-		while(k < lHabilidadesFlores){
-			os << this->_flores[i].flor.habilidadesF()[k] << " ";
-			k++;
-		}
-		os << "] } ( " << this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " ) ";
-		i++;
-	}
+  os << "{ N " << this->_ancho << " " << this->_alto << " " << this->_turno << " " << this->_soles << " [ ";
+  int i = 0;
+  int lFlores = this->_flores.size();
+  while (i < lFlores){
+    this->_flores[i].flor.Guardar(os);
+    i++;
+  }
 
-	os << "] [ ";
-	int j = 0;
-	int lVampiros = this->_vampiros.size();
-	while(j < lVampiros){
-		os << "( { V " << this->_vampiros[j].vampiro.claseV() << " " << this->_vampiros[j].vampiro.vidaV() << " " << this->_vampiros[j].vampiro.cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x; 
+  int j = 0;
+  int lVampiros = this->_vampiros.size();
+  while(j < lVampiros){
+    this->_vampiros[j].vampiro.Guardar(os);
+    j++;
+  }
 
-		os << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
-		j++;
-	}
-	os << "] [ ";
-	int s = 0;
-	int lSpawning = this->_spawning.size();
-	while(s < lSpawning){
-		os << "( { V " << this->_spawning[s].vampiro.claseV() << " " << this->_spawning[s].vampiro.vidaV() << " " << this->_spawning[s].vampiro.cuantoPegaV() << " } " << this->_spawning[s].fila;
-		os << " " << this->_spawning[s].turno << " ) ";
-	}
-	os << "] }";
+  int s = 0;
+  int lSpawning = this->_spawning.size();
+  while(s < lSpawning){
+    this->_spawning[s].vampiro.Guardar(os);
+    s++;
+  }
 }
+
+// void Nivel::Guardar(std::ostream& os)
+// {
+// 	os << "{ N " << this->_ancho << " " << this->_alto << " " << this->_turno << " " << this->_soles << " [ ";
+// 	int i = 0;
+// 	int lFlores = this->_flores.size();
+// 	while (i < lFlores){
+// 		os << "( { F " << this->_flores[i].flor.vidaF() << " " << this->_flores[i].flor.cuantoPegaF() << " [ ";
+// 		int k = 0;
+// 		int lHabilidadesFlores = this->_flores[i].flor.habilidadesF().size();
+// 		while(k < lHabilidadesFlores){
+// 			os << this->_flores[i].flor.habilidadesF()[k] << " ";
+// 			k++;
+// 		}
+// 		os << "] } ( " << this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " ) ";
+// 		i++;
+// 	}
+
+// 	os << "] [ ";
+// 	int j = 0;
+// 	int lVampiros = this->_vampiros.size();
+// 	while(j < lVampiros){
+// 		os << "( { V " << this->_vampiros[j].vampiro.claseV() << " " << this->_vampiros[j].vampiro.vidaV() << " " << this->_vampiros[j].vampiro.cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x; 
+
+// 		os << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
+// 		j++;
+// 	}
+// 	os << "] [ ";
+// 	int s = 0;
+// 	int lSpawning = this->_spawning.size();
+// 	while(s < lSpawning){
+// 		os << "( { V " << this->_spawning[s].vampiro.claseV() << " " << this->_spawning[s].vampiro.vidaV() << " " << this->_spawning[s].vampiro.cuantoPegaV() << " } " << this->_spawning[s].fila;
+// 		os << " " << this->_spawning[s].turno << " ) ";
+//     s++;
+// 	}
+// 	os << "] }";
+// }
 
 // void Nivel::Cargar(std::istream& is)
 // {

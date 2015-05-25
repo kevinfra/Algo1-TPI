@@ -83,7 +83,18 @@ std::vector<Habilidad>& Flor::habilidadesF(){
 }
 
 void Flor::Mostrar(std::ostream& os){
-
+	os << "Flor {" << std::endl;
+	os << "Vida : " << this->_vida << std::endl;
+	os << "Pega : " << this->_cuantoPega << std::endl;
+	os << "Habilidades : ";
+	int i = 0;
+	int l = this->_habilidades.size();
+	while(i < l){
+		os << tipoHabilidad(this->_habilidades[i]) << " ";
+		i++;
+	}
+	os << std::endl;
+	os << "}" << std::endl;
 }
 
 void Flor::Guardar(std::ostream& os){

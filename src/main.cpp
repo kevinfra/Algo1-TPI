@@ -62,7 +62,9 @@ int main(){
 
   Juego j(fs,vs);
 
-  j.agregarNivel(n);
+  // Nivel n1(4,4,100,spawn);
+
+  // j.agregarNivel(n);
 
   cout << j.muyDeExactas() << endl;
 
@@ -79,6 +81,30 @@ int main(){
   // f.Guardar(guardado);
 
   // cout << "flor guardada" << endl;
+
+  // cout << "ingrese archivo para guardar Vampiro" << endl;
+
+  // string inv;
+
+  // cin >> inv;
+
+  // ofstream guardadov(inv);
+
+  // v.Guardar(guardadov);
+
+  // cout << "vampiro guardado" << endl;
+
+  // cout << "ingrese archivo para guardar el nivel" << endl;
+
+  // string inNivel;
+
+  // cin >> inNivel;
+
+  // ofstream guardadon(inNivel);
+
+  // n.Guardar(guardadon);
+
+  // cout << "Nivel guardado" << endl;
 
   // cout << "ingrese nombre del archivo para guardar juego" << endl;
 
@@ -170,12 +196,16 @@ n.pasarTurno();
   cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;
 
 
-  int pases=0;
-  while(n.terminado() == false){
-    n.pasarTurno();
-    pases++;
-    cout << "Paso " << pases << " veces" << endl;
-  }  
+  f.Mostrar(cout);
+  v.Mostrar(cout);
+  n.Mostrar(cout);
+  j.Mostrar(cout);
+  // int pases=0;
+  // while(n.terminado() == false){
+  //   n.pasarTurno();
+  //   pases++;
+  //   cout << "Paso " << pases << " veces" << endl;
+  // }  
   
 
 

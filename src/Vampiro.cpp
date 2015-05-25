@@ -1,5 +1,14 @@
 #include "Vampiro.h"
 
+std::string TipoVampiro(ClaseVampiro clase)
+{
+  if(clase == Caminante){
+    return "Caminante";
+  }else if(clase == Desviado){
+    return "Desviado";
+  }
+}
+
 Vampiro::Vampiro(){}
 
 Vampiro::Vampiro(ClaseVampiro cv, Vida v, int cP){
@@ -29,11 +38,16 @@ int Vampiro::cuantoPegaV()
 
 void Vampiro::Mostrar(std::ostream& os)
 {
+  os << "Vampiro {" << std::endl;
+  os << "Vida : " << this->_vida << std::endl;
+  os << "Pega : " << this->_cuantoPega << std::endl;
+  os << "Clase : " << TipoVampiro(this->_clase) << std::endl;
+  os << "}" << std::endl;
 }
 
 void Vampiro::Guardar(std::ostream& os)
 {
-  os << "{ V " << this->_clase << " " << this->_vida << " " << this->_cuantoPega << " }";
+  os << "{ V " << TipoVampiro(this->_clase) << " " << this->_vida << " " << this->_cuantoPega << " }";
 }
 
 void Vampiro::Cargar(std::istream& is)
