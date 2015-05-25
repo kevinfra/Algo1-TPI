@@ -1,7 +1,5 @@
 #include "Flor.h"
 
-//faltaria probar las auxiliares (en realidad todo)
-
 bool perteneceH(Habilidad h, std::vector<Habilidad> hs){
 	bool b = false;
 	int l = hs.size();

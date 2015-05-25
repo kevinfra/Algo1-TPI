@@ -228,7 +228,7 @@ void actualizarSpawning(std::vector<VampiroEnEspera>& spaw, int turno){
   }
   v = 0;
   while(v < largoSpaw){
-    if(preSpaw[v].turno >= turno){
+    if(preSpaw[v].turno > turno){
       spaw.push_back(preSpaw[v]);
     }
     v++;
@@ -378,7 +378,7 @@ void Nivel::pasarTurno(){
     int vs=0;
     int largoSpaw = this->_spawning.size();
     while(vs < largoSpaw){
-      if(this->_spawning[vs].turno < this->_turno){
+      if(this->_spawning[vs].turno <= this->_turno){
         this->_vampiros.push_back(VampiroEnJuego(this->_spawning[vs].vampiro, Posicion(this->_ancho,this->_spawning[vs].fila), this->_spawning[vs].vampiro.vidaV() ));
       }
       vs++;
@@ -446,7 +446,6 @@ void Nivel::Mostrar(std::ostream& os)
 
 void Nivel::Guardar(std::ostream& os)
 {
-<<<<<<< HEAD
   os << "{ N " << this->_ancho << " " << this->_alto << " " << this->_turno << " " << this->_soles << " [ ";
   int i = 0;
   int lFlores = this->_flores.size();
@@ -468,7 +467,8 @@ void Nivel::Guardar(std::ostream& os)
     this->_spawning[s].vampiro.Guardar(os);
     s++;
   }
-
+	os << " ] }";
+}
 
 // void Nivel::Guardar(std::ostream& os)
 // {
