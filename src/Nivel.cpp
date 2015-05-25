@@ -405,7 +405,7 @@ bool Nivel::obsesivoCompulsivo(){
   return b;
 }
 
-void comprarSoles(int n){
+void Nivel::comprarSoles(int n){
   this->_soles = this->_soles + n;
 }
 
