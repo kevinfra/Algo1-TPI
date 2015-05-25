@@ -1,19 +1,21 @@
 #include "Juego.h"
 
-bool perteneceV(Vampiro v, std::vector<Vampiro> vamps){
-	bool b = false;
-	int l = vamps.size();
-	int i = 0;
-	while(i<l){
-		if(v.vidaV() == vamps[i].vidaV() && v.cuantoPegaV() == vamps[i].cuantoPegaV() && v.claseV() == vamps[i].claseV()){
-			b = true;
-		}
-		i++;
-	}
-	return b;
+using namespace std;
+
+bool vampirosIguales(Vampiro v1, Vampiro v2){
+	return (v1.vidaV() == v2.vidaV() && v1.cuantoPegaV() == v2.cuantoPegaV() && v1.claseV() == v2.claseV());
 }
 
-int cuenta(Habilidad h,std::vector<Habilidad> hs){
+bool perteneceV(Vampiro v,vector<Vampiro> vamps){
+	int l = vamps.size();
+	int i = 0;
+	while(i<l && !(vampirosIguales(v,vamps[i]))){
+		i++;
+	}
+	return i < l;
+}
+
+int cuenta(Habilidad h,vector<Habilidad> hs){
 	int cant = 0;
 	int l = hs.size();
 	int i = 0;
@@ -21,70 +23,65 @@ int cuenta(Habilidad h,std::vector<Habilidad> hs){
 	  if(h == hs[i]){
 	    cant++;
 	  }
+	  i++;
 	}
 	return cant;
 }
 
+
 bool cuentaMismosHabilidades(Flor f1, Flor f2){
-	bool b = true;
     int l = f1.habilidadesF().size();
     int i = 0;
-    while(i<l)
+    while(i<l && cuenta(f1.habilidadesF()[i],f1.habilidadesF())==cuenta(f1.habilidadesF()[i],f2.habilidadesF()))
     {
-      if(!(cuenta(f1.habilidadesF()[i],f1.habilidadesF())==cuenta(f1.habilidadesF()[i],f2.habilidadesF()))){
-    	  b = false;
-      }
+     i++;
     }
-	return b;
+	return i==l;
 }
 
 bool floresIguales(Flor f1, Flor f2){
 	return (f1.habilidadesF().size() == f2.habilidadesF().size() && cuentaMismosHabilidades(f1,f2));
 }
 
-bool perteneceF(Flor f, std::vector<Flor> flores){
-	bool b = false;
+bool perteneceF(Flor f, vector<Flor> flores){
 	int l = flores.size();
 	int i = 0;
-	while(i<l){
-		if(floresIguales(f,flores[i])){
-			b = true;
-		}
+	while(i<l && !(floresIguales(f,flores[i]))){
 		i++;
 	}
-	return b;
+	return i < l;
 }
 
 
 
-std::vector<Vampiro> sinRepetidosV(std::vector<Vampiro> vamps){
-	std::vector<Vampiro> nhw;
+vector<Vampiro> sinRepetidosV(vector<Vampiro> vamps){
+	vector<Vampiro> _vampsSinRepetir;
 	int l = vamps.size();
 	int i = 0;
 	while(i<l){
-		if(!perteneceV(vamps[i],nhw)){
-			nhw.push_back(vamps[i]);
+		if(!perteneceV(vamps[i],_vampsSinRepetir)){
+			_vampsSinRepetir.push_back(vamps[i]);
 		}
 		i++;
 	}
-	return nhw;
+	return _vampsSinRepetir;
 }
 
-std::vector<Flor> sinRepetidosF(std::vector<Flor> flores){
-	std::vector<Flor> nhw;
+vector<Flor> sinRepetidosF(vector<Flor> flores){
+	vector<Flor> _floresSinRepetir;
 	int l = flores.size();
 	int i = 0;
 	while(i<l){
-		if(!perteneceF(flores[i],nhw)){
-			nhw.push_back(flores[i]);
+		if(!perteneceF(flores[i],_floresSinRepetir)){
+			_floresSinRepetir.push_back(flores[i]);
 		}
 		i++;
 	}
-	return nhw;
+	return _floresSinRepetir;
 }
 
-std::vector<int> nivelesGanados(std::vector<Nivel> niveles){
-	std::vector<int> ganados;
+vector<int> nivelesGanados(vector<Nivel> niveles){
+	vector<int> ganados;
 	int i = 0;
 	int niv = niveles.size();
 	while(i<niv){
@@ -96,7 +93,7 @@ std::vector<int> nivelesGanados(std::vector<Nivel> niveles){
 	return ganados;
 }
 
-int maxSoles(std::vector<Nivel> niveles){
+int maxSoles(vector<Nivel> niveles){
      int max = 0;
      int i = 0;
      int cantNiveles = niveles.size();
@@ -109,7 +106,7 @@ int maxSoles(std::vector<Nivel> niveles){
      return max;
 }
 
-int maxFloresmaxSoles(std::vector<Nivel> niveles, int soles){
+int maxFloresmaxSoles(vector<Nivel> niveles, int soles){
 	 int max = 0;
      int i = 0;
      int cantNiveles = niveles.size();
@@ -126,23 +123,12 @@ Juego::Juego()
 {
 }
 
-Juego::Juego(std::vector<Flor>& flores, std::vector<Vampiro>& vamps)
+Juego::Juego(vector<Flor>& flores, vector<Vampiro>& vamps)
 {
-	//Preguntar como hacer para que la lista de niveles se cree vacia
-	//std::vector<Nivel> nivelesVacios;
-	this->_niveles = std::vector<Nivel>();
+	this->_niveles = vector<Nivel>();
 	this->_nivelActual = 0;
-	int i=0;
-	int l = sinRepetidosV(vamps).size();
-	while(i<l){
-		this->_vampiros.push_back(sinRepetidosV(vamps)[i]);
-		i++;
-	}
-	i=0;
-	while(i<l){
-		this->_flores.push_back(sinRepetidosF(flores)[i]);
-		i++;
-	}	
+	this->_vampiros = sinRepetidosV(vamps);
+	this->_flores = sinRepetidosF(flores);	
 }
 
 
@@ -157,81 +143,98 @@ void Juego::pasarNivel()
 	this->_nivelActual++;
 }
 
-std::vector<Flor>& Juego::floresJ()
+vector<Flor>& Juego::floresJ()
 {
 	return this->_flores;
 }
 
-std::vector<Vampiro>& Juego::vampirosJ()
+vector<Vampiro>& Juego::vampirosJ()
 {
 	return this->_vampiros;
 }
 
-std::vector<Nivel>& Juego::nivelesJ()
+vector<Nivel>& Juego::nivelesJ()
 {
 	return this->_niveles;
 }
 
-void Juego::agregarNivel(Nivel& n)
+void Juego::agregarNivel(Nivel& n, int i)
 {
-	//topreguntar si se agrega al final de la lista de niveles
-	//o si hace falta pasarle la posicion
-	if(n.turnoN() == 0 && n.floresN().size() == 0 && n.vampirosN().size() == 0){
-		this->_niveles.push_back(n);	
+	vector<Nivel> _nivelesSiguientes;
+	int l = this->_niveles.size();
+	int j = i;
+	while(j<l){
+		_nivelesSiguientes.push_back(this->_niveles[j]);
+		j++;
 	}
+	this->_niveles.resize(i+1);
+	this->_niveles[i] = n;
+	j = 0;
+	l = _nivelesSiguientes.size();
+    while(j<l){
+      this->_niveles.push_back(_nivelesSiguientes[j]);
+      j++;
+    }
 }
 
-std::vector<Nivel> Juego::estosSaleFacil()
+void Juego::jugarNivel(Nivel& n, int i)
+{
+    this->_niveles[i] = n;
+}
+
+vector<Nivel> Juego::estosSaleFacil()
 {
 	int _maxSoles = maxSoles(this->_niveles);
 	int _maxFloresmaxSoles = maxFloresmaxSoles(this->_niveles,_maxSoles);
-    std::vector<Nivel> nivelesFaciles;
+    vector<Nivel> nivelesFaciles;
     int i = 0;
     int cantNiveles = this->_niveles.size();
     while(i<cantNiveles){
        if(this->_niveles[i].solesN() == _maxSoles && this->_niveles[i].floresN().size() == _maxFloresmaxSoles){
            nivelesFaciles.push_back(this->_niveles[i]);
        }
+       i++;
     }
     return nivelesFaciles;
 }
 
+vector<VampiroEnJuego> vampirosMitadVida(vector<VampiroEnJuego> vampiros)
+{
+   vector<VampiroEnJuego> _vampsMitad;
+   int i = 0;
+   int l = vampiros.size();
+   while(i<l){
+      if(!((vampiros[i].vida / 2) == 0)){
+	      vampiros[i].vida = vampiros[i].vida / 2;
+         _vampsMitad.push_back(vampiros[i]);
+      }
+      i++;
+   }
+   return _vampsMitad;
+}
+
 void Juego::altoCheat(int n)
 {
-	int i = 0;
-	int vampiros = this->_niveles[n].vampirosN().size();
-    while(i<vampiros){
-        if(this->_niveles[n].vampirosN()[i].vida > 1){
-           this->_niveles[n].vampirosN()[i].vida = 
-           this->_niveles[n].vampirosN()[i].vida / 2;
-        }
-    	i++;
-    }
+	this->_niveles[n].vampirosN() = vampirosMitadVida(this->_niveles[n].vampirosN());
+}
+
+bool esFibonacciCasoBaseUno(vector<int> niveles){
+    return (niveles.size()== 1 && niveles[0] ==1);
+}
+
+bool esFibonacciCasoBaseDos(vector<int> niveles){
+    return (niveles.size()== 2 && niveles[0] ==1 && niveles[1] == 2);
 }
 
 bool Juego::muyDeExactas()
 {
-    bool esFibonacci = false;
-    std::vector<int> ganados = nivelesGanados(this->_niveles);
-    if(ganados.size() == 1 && ganados[0] == 1){
-       esFibonacci = true;
+    vector<int> ganados = nivelesGanados(this->_niveles);
+    int i = 2;
+    int l = ganados.size();
+    while(i<l && (ganados[i] == ganados[i-1] + ganados[i-2])){
+    	i++;
     }
-    if(ganados.size() == 2 && ganados[0] == 1 && ganados[1] == 2){
-    	esFibonacci = true;
-    }
-    if(ganados.size() > 2){
-    	int i = 2;
-    	esFibonacci = true;
-    	int niveles = ganados.size();
-    	while(i<niveles){
-            if(!(ganados[i] == ganados[i-1] + ganados[i-2]))
-              {
-              	esFibonacci = false;
-              }
-    		i++;
-    	}
-    }
-    return esFibonacci;
+    return (i == l || esFibonacciCasoBaseUno(ganados) || esFibonacciCasoBaseDos(ganados));
 }
 
 void Juego::Mostrar(std::ostream& os)

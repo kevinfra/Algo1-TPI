@@ -76,6 +76,7 @@ public:
 	void pasarTurno();
 	bool terminado();
 	bool obsesivoCompulsivo();
+	void comprarSoles(int n);
 
 	void Mostrar(std::ostream& os);
 	void Guardar(std::ostream& os);
