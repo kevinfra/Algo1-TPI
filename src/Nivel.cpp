@@ -450,24 +450,30 @@ void Nivel::Guardar(std::ostream& os)
   int i = 0;
   int lFlores = this->_flores.size();
   while (i < lFlores){
+	  os << "( ";
     this->_flores[i].flor.Guardar(os);
+    os << " ( "<< this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " ) )";
     i++;
   }
-
+  os << " ] [ ";
   int j = 0;
   int lVampiros = this->_vampiros.size();
   while(j < lVampiros){
-    this->_vampiros[j].vampiro.Guardar(os);
+	os << "( ";
+	this->_vampiros[j].vampiro.Guardar(os); 
+    os << " ( " << this->_vampiros[j].pos.x << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
     j++;
   }
-
+  os << " ] [ ";
   int s = 0;
   int lSpawning = this->_spawning.size();
   while(s < lSpawning){
-    this->_spawning[s].vampiro.Guardar(os);
+	os << "( " << std::endl;
+	this->_spawning[s].vampiro.Guardar(os);
+	os << this->_spawning[s].fila << " " << this->_spawning[s].turno << " )";
     s++;
   }
-	os << " ] }";
+	os << " ] }" << std::endl;
 }
 
 // void Nivel::Guardar(std::ostream& os)

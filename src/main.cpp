@@ -381,17 +381,17 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
 
   // cout << "vampiro guardado" << endl;
 
-  // cout << "ingrese archivo para guardar el nivel" << endl;
+  cout << "ingrese archivo para guardar el nivel" << endl;
 
-  // string inNivel;
+  string inNivel;
 
-  // cin >> inNivel;
+  cin >> inNivel;
 
-  // ofstream guardadon(inNivel);
+  ofstream guardadon(inNivel);
 
-  // n.Guardar(guardadon);
+  n.Guardar(guardadon);
 
-  // cout << "Nivel guardado" << endl;
+  cout << "Nivel guardado" << endl;
 
   // cout << "ingrese nombre del archivo para guardar juego" << endl;
 
