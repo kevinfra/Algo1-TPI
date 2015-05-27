@@ -356,5 +356,25 @@ void Juego::Guardar(std::ostream& os){
 
 void Juego::Cargar(std::iostream& is)
 {
-	
+	std::string juego;
+	getline(is, juego, 'J');
+	getline(is, juego, ' ');
+	int f = 0;
+	int listaFloresJ = this->_flores.size();
+	while (f < listaFloresJ) {
+		this->_flores[f].Cargar(is);
+		f++;
+	}
+	int v = 0;
+	int listaVampirosJ = this->_vampiros.size();
+	while (v < listaVampirosJ) {
+		this->_vampiros[v].Cargar(is);
+		v++;
+	}
+	int n = 0;
+	int listaNivelesJ = this->_niveles.size();
+	while (n < listaNivelesJ) {
+		this->_niveles[n].Cargar(is);
+		n++;
+	}
 }

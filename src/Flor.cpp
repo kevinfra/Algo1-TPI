@@ -114,13 +114,15 @@ void Flor::Cargar(std::istream& is){
 	getline(is, flor, ' ');
 	std::string vidaC;
 	getline(is, vidaC, ' ');
-	this->_vida = std::stoi(vidaC);
+	this->_vida = std::atoi(vidaC.c_str());
 	std::string cuantoPegaC;
-	getline(is, cuantoPegaC, '[');
-	this->_cuantoPega = std::stoi(cuantoPegaC);
+	getline(is, cuantoPegaC, ' ');
+	std::string basura;
+	getline(is, basura, '[');
+	this->_cuantoPega = std::atoi(cuantoPegaC.c_str());
 	getline(is, flor, ' ');
 	std::string habF; 
-	while(habF != "]"){
+	while(habF.back() != ']'){
 		
 		
 		getline(is, habF, ' ');
@@ -137,5 +139,6 @@ void Flor::Cargar(std::istream& is){
 				this->_habilidades.push_back(Generar);
 			} 
 		}
+		// getline(is, habF, ' ');
 	}
 }

@@ -65,9 +65,9 @@ void Vampiro::Cargar(std::istream& is)
 	
   std::string vidaC;
 	getline(is, vidaC, ' ');
-  this->_vida = std::stoi(vidaC);
+  this->_vida = std::atoi(vidaC.c_str());
   std::string cuantoPegaC;
 	getline(is, cuantoPegaC, ' ');
-  this->_cuantoPega = std::stoi(cuantoPegaC);
+  this->_cuantoPega = std::atoi(cuantoPegaC.c_str());
 	
 }
