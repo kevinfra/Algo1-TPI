@@ -228,7 +228,7 @@ void actualizarSpawning(std::vector<VampiroEnEspera>& spaw, int turno){
   }
   v = 0;
   while(v < largoSpaw){
-    if(preSpaw[v].turno >= turno){
+    if(preSpaw[v].turno > turno){
       spaw.push_back(preSpaw[v]);
     }
     v++;
@@ -378,7 +378,7 @@ void Nivel::pasarTurno(){
     int vs=0;
     int largoSpaw = this->_spawning.size();
     while(vs < largoSpaw){
-      if(this->_spawning[vs].turno < this->_turno){
+      if(this->_spawning[vs].turno <= this->_turno){
         this->_vampiros.push_back(VampiroEnJuego(this->_spawning[vs].vampiro, Posicion(this->_ancho,this->_spawning[vs].fila), this->_spawning[vs].vampiro.vidaV() ));
       }
       vs++;
@@ -450,24 +450,32 @@ void Nivel::Guardar(std::ostream& os)
   int i = 0;
   int lFlores = this->_flores.size();
   while (i < lFlores){
+	  os << "( ";
     this->_flores[i].flor.Guardar(os);
+    os << " ( "<< this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " ) )";
     i++;
   }
-
+  os << " ] [ ";
   int j = 0;
   int lVampiros = this->_vampiros.size();
   while(j < lVampiros){
-    this->_vampiros[j].vampiro.Guardar(os);
+	os << "( ";
+	this->_vampiros[j].vampiro.Guardar(os); 
+    os << " ( " << this->_vampiros[j].pos.x << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
     j++;
   }
-
+  os << " ] [ ";
   int s = 0;
   int lSpawning = this->_spawning.size();
   while(s < lSpawning){
-    this->_spawning[s].vampiro.Guardar(os);
+	os << "( " << std::endl;
+	this->_spawning[s].vampiro.Guardar(os);
+	os << this->_spawning[s].fila << " " << this->_spawning[s].turno << " )";
     s++;
   }
-  os << "] }" << std::endl;
+
+	os << " ] }" << std::endl;
+
 }
 
 // void Nivel::Guardar(std::ostream& os)
