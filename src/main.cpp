@@ -93,18 +93,20 @@ int main(){
 
   // cout << "vampiro guardado" << endl;
 
-  // cout << "ingrese archivo para guardar el nivel" << endl;
+   cout << "ingrese archivo para guardar el nivel" << endl;
 
-  // string inNivel;
+   cout << "cant flores: " << n.floresN().size() << endl;
 
-  // cin >> inNivel;
+   string inNivel;
 
-  // ofstream guardadon(inNivel);
+   cin >> inNivel;
 
-  // n.Guardar(guardadon);
+   ofstream guardadon(inNivel);
+
+   n.Guardar(guardadon);
 
   // cout << "Nivel guardado" << endl;
-
+   
   // cout << "ingrese nombre del archivo para guardar juego" << endl;
 
   // string inJ;
@@ -126,11 +128,11 @@ int main(){
   cout << n.terminado() << ' ' << n.obsesivoCompulsivo() << endl;  
 
 
-  f.Mostrar(cout);
-  v.Mostrar(cout);
-  n.Mostrar(cout);
-  j.Mostrar(cout);
-  // int pases=0;
+  // f.Mostrar(cout);
+  // v.Mostrar(cout);
+  // n.Mostrar(cout);
+  // j.Mostrar(cout);
+  // // int pases=0;
   // while(n.terminado() == false){
   //   n.pasarTurno();
   //   pases++;
@@ -185,5 +187,25 @@ int main(){
 
   Nivel n1(10,20,0,)
 */
+  string solo;
+
+  cout << "Ingrese el nombre del archivo a cargar nivel" << endl;
+
+  cin >> solo;
+
+  ifstream asds(solo);
+
+  Nivel nivelCargado;
+  nivelCargado.Cargar(asds);
+
+
+  assert (nivelCargado.anchoN() == 5);
+  assert (nivelCargado.altoN() == 5);
+  assert (nivelCargado.turnoN() == 1);
+  assert (nivelCargado.solesN() == 98);
+  assert (nivelCargado.floresN().size() == 1);
+  assert (nivelCargado.vampirosN().size() == 0);
+  assert (nivelCargado.spawningN().size() == 2);
+
   return 0;
 }
