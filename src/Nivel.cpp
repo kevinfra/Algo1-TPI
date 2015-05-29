@@ -280,7 +280,7 @@ bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
   while(v < largoF && tieneHabilidad(Atacar,floresOrdenadas[v-1]) == !(tieneHabilidad(Atacar,floresOrdenadas[v]))){
     v++;
   }
-  return largoF == 1 || v == largoF;
+  return largoF <= 1 || v == largoF;
 }
 
 Nivel::Nivel(){}
@@ -371,7 +371,7 @@ bool Nivel::terminado(){
 bool Nivel::obsesivoCompulsivo(){
   std::vector<FlorEnJuego> floresOrdenadas = this->_flores;
   ordenarFlores(floresOrdenadas);
-  return this->_flores.size() < 2 || hayPatron(floresOrdenadas);
+  return hayPatron(floresOrdenadas);
 }
 
 void Nivel::comprarSoles(int n){
@@ -415,31 +415,31 @@ void Nivel::Mostrar(std::ostream& os)
 
 void Nivel::Guardar(std::ostream& os)
 {
-  os << "{ N " << this->_ancho << " " << this->_alto << " " << this->_turno << " " << this->_soles << " [ ";
+  os << "{ N " << this->_ancho << " " << this->_alto << " " << this->_turno << " " << this->_soles << " [";
   int i = 0;
   int lFlores = this->_flores.size();
   while (i < lFlores){
-	  os << "( ";
+	  os << " ( ";
     this->_flores[i].flor.Guardar(os);
-    os << " ( "<< this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " ) )";
+    os << " ( "<< this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " )";
     i++;
   }
-  os << " ] [ ";
+  os << " ] [";
   int j = 0;
   int lVampiros = this->_vampiros.size();
   while(j < lVampiros){
-	os << "( ";
-	this->_vampiros[j].vampiro.Guardar(os); 
-    os << " ( " << this->_vampiros[j].pos.x << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
+	os << " ( ";
+	this->_vampiros[j].vampiro.Guardar(os);
+    os << " ( " << this->_vampiros[j].pos.x << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " )";
     j++;
   }
-  os << " ] [ ";
+  os << " ] [";
   int s = 0;
   int lSpawning = this->_spawning.size();
   while(s < lSpawning){
-	os << "( " << std::endl;
+	os << " ( " << std::endl;
 	this->_spawning[s].vampiro.Guardar(os);
-	os << this->_spawning[s].fila << " " << this->_spawning[s].turno << " )";
+	os << " " << this->_spawning[s].fila << " " << this->_spawning[s].turno << " )";
     s++;
   }
 
@@ -468,7 +468,7 @@ void Nivel::Guardar(std::ostream& os)
 // 	int j = 0;
 // 	int lVampiros = this->_vampiros.size();
 // 	while(j < lVampiros){
-// 		os << "( { V " << this->_vampiros[j].vampiro.claseV() << " " << this->_vampiros[j].vampiro.vidaV() << " " << this->_vampiros[j].vampiro.cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x; 
+// 		os << "( { V " << this->_vampiros[j].vampiro.claseV() << " " << this->_vampiros[j].vampiro.vidaV() << " " << this->_vampiros[j].vampiro.cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x;
 
 // 		os << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
 // 		j++;
@@ -484,91 +484,98 @@ void Nivel::Guardar(std::ostream& os)
 // 	os << "] }";
 // }
 
- void Nivel::Cargar(std::istream& is)
- {
-   std::string nivel;
-   getline(is, nivel, 'N');
-   getline(is, nivel, ' ');
-   std::string anchoNivel;
-   getline(is, anchoNivel, ' ');
-   this->_ancho = std::atoi(anchoNivel.c_str());
-   std::string altoNivel;
-   getline(is, altoNivel, ' ');
-   this->_alto = std::atoi(altoNivel.c_str());
-   std::string turnoNivel;
-   getline(is, turnoNivel, ' ');
-   this->_turno = std::atoi(turnoNivel.c_str());
-   std::string solesNivel;
-   getline(is, solesNivel, ' ');
-   this->_soles = std::atoi(solesNivel.c_str());
-   std::string basura;
-   getline(is, basura, '{');
-   std::string cambioTipo;
-   getline(is, cambioTipo, ' ');
-   char ultimoCambio=cambioTipo.back();
-   while(ultimoCambio != ']') {
-    std::cout << "a comerlaaaa" << std::endl;
-    Flor cargaf;
+void Nivel::Cargar(std::istream& is){
+  std::string nivel;
+  getline(is, nivel, 'N');
+  getline(is, nivel, ' ');
+  std::string anchoNivel;
+  getline(is, anchoNivel, ' ');
+  this->_ancho = std::atoi(anchoNivel.c_str());
+  std::string altoNivel;
+  getline(is, altoNivel, ' ');
+  this->_alto = std::atoi(altoNivel.c_str());
+  std::string turnoNivel;
+  getline(is, turnoNivel, ' ');
+  this->_turno = std::atoi(turnoNivel.c_str());
+  std::string solesNivel;
+  getline(is, solesNivel, ' ');
+  this->_soles = std::atoi(solesNivel.c_str());
+  std::string basura;
+  getline(is, basura, ' ');
+  std::string cambioTipo;
+  getline(is, cambioTipo, ' ');
+  char ultimoCambio=cambioTipo.back();
+  while(ultimoCambio != ']') {
+    std::cout << "entro a flor" << std::endl;
+    Flor cargaflor;
     Posicion t;
     Vida v;
-     // this->_flores.push_back(fCargar.Cargar(is), );
-     cargaf.Cargar(is);
-     std::cout << "cargo la flor" << std::endl;
-     getline(is, basura, '(');
-     getline(is, basura, ' ');
-     std::string posicionFx;
-     getline(is, posicionFx, ' ');
-     std::cout << "pos x lo pasa" << std::endl;
-     t.x = std::atoi(posicionFx.c_str());
-     std::string posicionFy;
-     getline(is, posicionFy, ' ');
-     std::cout << "pos y lo pasa" << std::endl;
-     t.y = std::atoi(posicionFy.c_str());
-     getline(is, basura, ' ');
-     std::string vidaFi;
-     getline(is, vidaFi, ' ');
-     std::cout << "vida lo pasa" << std::endl;
-     v = std::atoi(vidaFi.c_str());
-     getline(is, basura, ' ');
-     std::cout << "pasa el ' ' " << std::endl;
-     FlorEnJuego fCargar(cargaf,t,v);
-     this->_flores.push_back(fCargar);
-     getline(is, cambioTipo, ' ');
-     ultimoCambio = cambioTipo.back();
-     std::cout << "no se va" << std::endl;
-   }
-   int j = 0;
-   int listaVampirosN = this->_vampiros.size();
-   while(j < listaVampirosN) {
-    this->_vampiros[j].vampiro.Cargar(is);
-     getline(is, basura, '(');
-     getline(is, basura, ' ');
-     std::string posicionVx;
-     getline(is, posicionVx, ' ');
-     this->_vampiros[j].pos.x = std::atoi(posicionVx.c_str());
-     std::string posicionVy;
-     getline(is, posicionVy, ' ');
-     this->_vampiros[j].pos.y = std::atoi(posicionVy.c_str());
-     getline(is, basura, ' ');
-     std::string vidaVj;
-     getline(is, vidaVj, ' ');
-     this->_vampiros[j].vida = std::atoi(vidaVj.c_str());
-     getline(is, basura, ')');
-    j++;
-   }
-   int s = 0;
-   int listaVampirosSpawN = this->_spawning.size();
-   while(s < listaVampirosSpawN) {
-    this->_spawning[s].vampiro.Cargar(is);
-     getline(is, basura, ' ');
-     std::string fila;
-     getline(is, fila, ' ');
-     this->_spawning[s].fila = std::atoi(fila.c_str());
-     getline(is, basura, ' ');
-     std::string turnoVs;
-     getline(is, turnoVs, ' ');
-     this->_spawning[s].turno = std::atoi(turnoVs.c_str());
-     getline(is, basura, ')');
-    s++;
-   }
+    cargaflor.Cargar(is);
+    getline(is, basura, '(');
+    getline(is, basura, ' ');
+    std::string posicionFx;
+    getline(is, posicionFx, ' ');
+    t.x = std::atoi(posicionFx.c_str());
+    std::string posicionFy;
+    getline(is, posicionFy, ' ');
+    t.y = std::atoi(posicionFy.c_str());
+    getline(is, basura, ' ');
+    std::string vidaFi;
+    getline(is, vidaFi, ' ');
+    v = std::atoi(vidaFi.c_str());
+    getline(is, basura, ' ');
+    FlorEnJuego fCargar(cargaflor,t,v);
+    this->_flores.push_back(fCargar);
+    getline(is, cambioTipo, ' ');
+    ultimoCambio = cambioTipo.back();
+  }
+  getline(is, basura, ' ');
+  getline(is, cambioTipo, ' ');
+  ultimoCambio = cambioTipo.back();
+  while(ultimoCambio != ']') {
+    std::cout << "entro a vampiro" << std::endl;
+    Vampiro cargaVampiro;
+    Posicion p;
+    Vida v;
+    cargaVampiro.Cargar(is);
+    getline(is, basura, '(');
+    getline(is, basura, ' ');
+    std::string posicionVx;
+    getline(is, posicionVx, ' ');
+    p.x = std::atoi(posicionVx.c_str());
+    std::string posicionVy;
+    getline(is, posicionVy, ' ');
+    p.y = std::atoi(posicionVy.c_str());
+    getline(is, basura, ' ');
+    std::string vidaVj;
+    getline(is, vidaVj, ' ');
+    v = std::atoi(vidaVj.c_str());
+    VampiroEnJuego vCargar(cargaVampiro, p, v);
+    this->_vampiros.push_back(vCargar);
+    getline(is, basura, ' ');
+    getline(is, cambioTipo, ' ');
+    ultimoCambio = cambioTipo.back();
+  }
+  getline(is, basura, ' ');
+  getline(is, cambioTipo, ' ');
+  ultimoCambio = cambioTipo.back();
+  while(ultimoCambio != ']'){
+    std::cout << "entro a spawning" << std::endl;
+    Vampiro cargarVS;
+    int cargarFila;
+    int cargarTurnoS;
+    cargarVS.Cargar(is);
+    getline(is, basura, ' ');
+    std::string fila;
+    getline(is, fila, ' ');
+    cargarFila = std::atoi(fila.c_str());
+    getline(is, basura, ' ');
+    std::string turnoVs;
+    getline(is, turnoVs, ' ');
+    cargarTurnoS = std::atoi(turnoVs.c_str());
+    VampiroEnEspera vSpawC(cargarVS,cargarFila,cargarTurnoS);
+    this->_spawning.push_back(vSpawC);
+    getline(is, cambioTipo, ' ');
+    ultimoCambio = cambioTipo.back();
+  }
 }

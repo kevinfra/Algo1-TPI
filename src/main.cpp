@@ -160,14 +160,14 @@ int main(){
   n2.agregarFlor(f2, Posicion(3,15));
   n2.agregarFlor(f5, Posicion(5,15));
   n2.agregarFlor(f8, Posicion(2,15));
-  assert(n2.obsesivoCompulsivo() == false); 
+  assert(n2.obsesivoCompulsivo() == false);
 
   //n2.agregarFlor(f3, Posicion(1,15));
   //n2.agregarFlor(f1, Posicion(2,15));
   //n2.agregarFlor(f2, Posicion(3,15));
   //n2.agregarFlor(f4, Posicion(4,15));
 
-  //assert(n2.obsesivoCompulsivo() == true); 
+  //assert(n2.obsesivoCompulsivo() == true);
 
   cout << "El largo de spawning es: " << n.spawningN().size() << endl;
 
@@ -263,7 +263,7 @@ int main(){
   n7.pasarTurno();
 
   j.agregarNivel(n7,4);
-  
+
 
 cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   assert(j.nivelesJ()[4].vampirosN().size() == 4);
@@ -292,7 +292,7 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   j2.agregarNivel(n2Vacio,2);
 
   assert(j2.muyDeExactas() == false);
- 
+
   Juego j3(fs,vs);
 
   j3.agregarNivel(nLleno,0);
@@ -358,7 +358,7 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   cout << "Nivel guardado" << endl;
 
   // cout << "Nivel guardado" << endl;
-   
+
   // cout << "ingrese nombre del archivo para guardar juego" << endl;
 
   // string inJ;
@@ -375,7 +375,7 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
 
   cout << "el largo de flores es: " << n.floresN().size() << endl;
   cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl; 
+  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
 
 
   // f.Mostrar(cout);
@@ -389,9 +389,9 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   //   n.pasarTurno();
   //   pases++;
   //   cout << "Paso " << pases << " veces" << endl;
-  // }  
-  
-  
+  // }
+
+
 
 
   // -------------------------TESTS------------------------------
@@ -432,13 +432,13 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   nivelCargado.Cargar(asds);
 
 
-  assert (nivelCargado.anchoN() == 5);
-  assert (nivelCargado.altoN() == 5);
-  assert (nivelCargado.turnoN() == 1);
-  assert (nivelCargado.solesN() == 98);
+  assert (nivelCargado.anchoN() == 10);
+  assert (nivelCargado.altoN() == 10);
+  assert (nivelCargado.turnoN() == 12);
+  assert (nivelCargado.solesN() == 135);
   assert (nivelCargado.floresN().size() == 1);
-  assert (nivelCargado.vampirosN().size() == 0);
-  assert (nivelCargado.spawningN().size() == 2);
+  assert (nivelCargado.vampirosN().size() == 6);
+  assert (nivelCargado.spawningN().size() == 0);
 
   return 0;
 }
