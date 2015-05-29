@@ -54,7 +54,7 @@ bool perteneceF(Flor f, vector<Flor> flores){
 
 
 
-vector<Vampiro> sinRepetidosV(vector<Vampiro> vamps){
+vector<Vampiro> sinRepetidosV(vector<Vampiro>& vamps){
 	vector<Vampiro> _vampsSinRepetir;
 	int l = vamps.size();
 	int i = 0;
@@ -67,7 +67,7 @@ vector<Vampiro> sinRepetidosV(vector<Vampiro> vamps){
 	return _vampsSinRepetir;
 }
 
-vector<Flor> sinRepetidosF(vector<Flor> flores){
+vector<Flor> sinRepetidosF(vector<Flor>& flores){
 	vector<Flor> _floresSinRepetir;
 	int l = flores.size();
 	int i = 0;
@@ -198,7 +198,7 @@ vector<Nivel> Juego::estosSaleFacil()
     return nivelesFaciles;
 }
 
-vector<VampiroEnJuego> vampirosMitadVida(vector<VampiroEnJuego> vampiros)
+vector<VampiroEnJuego> vampirosMitadVida(vector<VampiroEnJuego>& vampiros)
 {
    vector<VampiroEnJuego> _vampsMitad;
    int i = 0;

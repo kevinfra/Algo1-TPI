@@ -20,27 +20,19 @@ bool spawningOrdenado(std::vector<VampiroEnEspera>& spawninglist){
 bool spawningValido(std::vector<VampiroEnEspera>& spawninglist, int alto){
   int v = 0;
   int l = spawninglist.size();
-  bool b = true;
-  while(v < l){
-    if(!(spawninglist[v].fila>0) || !(spawninglist[v].fila <= alto) || !(spawninglist[v].turno >= 0)){
-      b = false;
-    }
+  while(v < l && spawninglist[v].fila>0 && spawninglist[v].fila <= alto && spawninglist[v].turno >= 0){
     v++;
   }
-  return b;
+  return v == l;
 }
 
 bool noHayFlorEnPos(std::vector<FlorEnJuego> flores, Posicion pos){
   int l = flores.size();
   int v = 0;
-  bool b = true;
-  while(v < l){
-    if(flores[v].pos.x == pos.x && flores[v].pos.y == pos.y){
-      b = false;
-    }
+  while(v < l && !(flores[v].pos.x == pos.x && flores[v].pos.y == pos.y)){
     v++;
   }
-  return b;
+  return v == l;
 }
 
 int danoFlor(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
@@ -57,37 +49,25 @@ int danoFlor(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
 }
 
 bool hayVampiroEnPos(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
-  bool b = false;
   int lv = vampiros.size();
   int v = 0;
-  while(v < lv){
-    if(vampiros[v].pos.x == flor.pos.x && vampiros[v].pos.y == flor.pos.y){
-      b = true;
-    }
+  while(v < lv && !(vampiros[v].pos.x == flor.pos.x && vampiros[v].pos.y == flor.pos.y)){
     v++;
   }
-  return b;
+  return v < lv;
 }
 
 bool tieneHabilidad(Habilidad h, FlorEnJuego flor){
-  bool b = false;
   int v = 0;
   int lh = flor.flor.habilidadesF().size();
-  while(v < lh){
-    if(h == flor.flor.habilidadesF()[v]){
-      b = true;
-    }
+  while(v < lh && h != flor.flor.habilidadesF()[v]){
     v++;
   }
-  return b;
+  return v < lh;
 }
 
 bool florExplota(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
-  bool b = false;
-  if (tieneHabilidad(Explotar, flor) && hayVampiroEnPos(flor, vampiros)){
-    b = true;
-  }
-  return b;
+  return tieneHabilidad(Explotar, flor) && hayVampiroEnPos(flor, vampiros);
 }
 
 std::vector<FlorEnJuego> floresVivas(std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
@@ -125,16 +105,12 @@ bool enMira(FlorEnJuego flor, VampiroEnJuego vamp){
 }
 
 bool noIntercepta(VampiroEnJuego vamp, FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
-  bool b = true;
   int v = 0;
   int largoVampiros = vampiros.size();
-  while(v < largoVampiros){
-    if(enMira(flor, vampiros[v]) && (vampiros[v].pos.x <= vamp.pos.x)){
-      b = false;
-    }
+  while(v < largoVampiros && !(enMira(flor, vampiros[v]) && (vampiros[v].pos.x <= vamp.pos.x))){
     v++;
   }
-  return b;
+  return v == largoVampiros;
 }
 
 int danoV(VampiroEnJuego vamp, std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
@@ -151,16 +127,12 @@ int danoV(VampiroEnJuego vamp, std::vector<FlorEnJuego> flores, std::vector<Vamp
 }
 
 bool hayFlorSobreviviente(Posicion p, std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
-  bool b = false;
   int x = 0;
   int largoFlores = flores.size();
-  while(x < largoFlores){
-    if(flores[x].pos.x == p.x && flores[x].pos.y == p.y && flores[x].vida - danoFlor(flores[x], vampiros) > 0){
-      b = true;
-    }
+  while(x < largoFlores && !(flores[x].pos.x == p.x && flores[x].pos.y == p.y && flores[x].vida - danoFlor(flores[x], vampiros) > 0)){
     x++;
   }
-  return b;
+  return x < largoFlores;
 }
 
 bool hayFlorSobrevivienteExplota(Posicion p, std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
@@ -238,14 +210,10 @@ void actualizarSpawning(std::vector<VampiroEnEspera>& spaw, int turno){
 bool vampiroEnColumnaCero(std::vector<VampiroEnJuego> vampiros){
   int v = 0;
   int largoVamps = vampiros.size();
-  bool b = false;
-  while(v < largoVamps){
-    if(vampiros[v].pos.x == 0){
-      b = true;
-    }
+  while(v < largoVamps && !(vampiros[v].pos.x == 0)){
     v++;
   }
-  return b;
+  return v < largoVamps;
 }
 
 bool floresDesordenadas(std::vector<FlorEnJuego> floresOrdenadas){
@@ -287,7 +255,7 @@ void ordenarFlores(std::vector<FlorEnJuego>& floresOrdenadas){
     }
   }
 }
-
+/*
 bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
   bool b = false;
   int v = 1;
@@ -304,6 +272,15 @@ bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
     }
   }
   return b;
+}
+*/
+bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
+  int v = 1;
+  int largoF = floresOrdenadas.size();
+  while(v < largoF && tieneHabilidad(Atacar,floresOrdenadas[v-1]) == !(tieneHabilidad(Atacar,floresOrdenadas[v]))){
+    v++;
+  }
+  return largoF == 1 || v == largoF;
 }
 
 Nivel::Nivel(){}
@@ -388,21 +365,13 @@ void Nivel::pasarTurno(){
 }
 
 bool Nivel::terminado(){
-  bool b;
-  b = ( vampiroEnColumnaCero(this->_vampiros) || (this->_vampiros.empty() && this->_spawning.empty()) );
-  return b;
+   return vampiroEnColumnaCero(this->_vampiros) || (this->_vampiros.empty() && this->_spawning.empty());
 }
 
 bool Nivel::obsesivoCompulsivo(){
-  bool b;
-  if(this->_flores.size() < 2){
-    b = true;
-  }else{
-    std::vector<FlorEnJuego> floresOrdenadas = this->_flores;
-    ordenarFlores(floresOrdenadas);
-    b = hayPatron(floresOrdenadas);
-  }
-  return b;
+  std::vector<FlorEnJuego> floresOrdenadas = this->_flores;
+  ordenarFlores(floresOrdenadas);
+  return this->_flores.size() < 2 || hayPatron(floresOrdenadas);
 }
 
 void Nivel::comprarSoles(int n){
