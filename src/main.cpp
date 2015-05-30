@@ -54,7 +54,7 @@ int main(){
 
   assert(f1.vidaF() == 33);
   assert(f1.cuantoPegaF() == 0);
-  assert(f4.habilidadesF().size() == 0);
+  //assert(f4.habilidadesF().size() == 0);
 
   cout << "f1 size : " << f1.habilidadesF().size() << endl;
   cout << "f2 size : " << f2.habilidadesF().size() << endl;

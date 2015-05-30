@@ -1,55 +1,57 @@
 #include "Flor.h"
 
-bool perteneceH(Habilidad h, std::vector<Habilidad> hs){
-	bool b = false;
-	int l = hs.size();
-	int i = 0;
-	while(i<l){
-		if(h == hs[i]){
-			b = true;
-		}
-		i++;
-	}
-	return b;
+using namespace std;
 
-}
+// bool perteneceH(Habilidad h, vector<Habilidad> hs){
+// 	bool b = false;
+// 	int l = hs.size();
+// 	int i = 0;
+// 	while(i<l){
+// 		if(h == hs[i]){
+// 			b = true;
+// 		}
+// 		i++;
+// 	}
+// 	return b;
 
-std::vector<Habilidad> sinRepetidosH(std::vector<Habilidad> hs){
-	std::vector<Habilidad> nhw;
-	int l = hs.size();
-	int i = 0;
-	if(l == 0){
-		nhw=hs;
-	}
-	while(i<l){
-		if(!perteneceH(hs[i],nhw)){
-			nhw.push_back(hs[i]);
-		}
-		i++;
-	}
-	return nhw;
-}
+// }
 
-bool vidaValidaF(Vida v, std::vector<Habilidad> habilidades){
-	bool b;
-	int lH = habilidades.size();
-	int valorRealVida = 100 / (lH + 1);
-	b = (v == valorRealVida);
-	return b;
-}
+// vector<Habilidad> sinRepetidosH(vector<Habilidad> hs){
+// 	vector<Habilidad> nhw;
+// 	int l = hs.size();
+// 	int i = 0;
+// 	if(l == 0){
+// 		nhw=hs;
+// 	}
+// 	while(i<l){
+// 		if(!perteneceH(hs[i],nhw)){
+// 			nhw.push_back(hs[i]);
+// 		}
+// 		i++;
+// 	}
+// 	return nhw;
+// }
 
-bool cPegaValidoF(int cP, std::vector<Habilidad> habilidades){
-	bool b;
-	if(perteneceH(Atacar, habilidades)){
-		b = (cP == (12 / habilidades.size()));
-	}else{
-		b = (cP == 0);
-	}
-	return b;
-}
+// bool vidaValidaF(Vida v, vector<Habilidad> habilidades){
+// 	bool b;
+// 	int lH = habilidades.size();
+// 	int valorRealVida = 100 / (lH + 1);
+// 	b = (v == valorRealVida);
+// 	return b;
+// }
 
-std::string tipoHabilidad(Habilidad h){
-	std::string poder;
+// bool cPegaValidoF(int cP, vector<Habilidad> habilidades){
+// 	bool b;
+// 	if(perteneceH(Atacar, habilidades)){
+// 		b = (cP == (12 / habilidades.size()));
+// 	}else{
+// 		b = (cP == 0);
+// 	}
+// 	return b;
+// }
+
+string tipoHabilidad(Habilidad h){
+	string poder;
 	if(h==Generar){
 		poder="Generar";
 	}else if(h == Atacar){
@@ -62,28 +64,28 @@ std::string tipoHabilidad(Habilidad h){
 
 Flor::Flor(){}
 
-Flor::Flor(Vida v, int cP, std::vector<Habilidad> hs){
-	if(hs.size() == sinRepetidosH(hs).size() && vidaValidaF(v, hs) && cPegaValidoF(cP, hs)){
-		this->_habilidades = hs;
-		this->_vida = v;
-		this->_cuantoPega = cP;
-	}
+Flor::Flor(Vida v, int cP, vector<Habilidad> hs){
+	this->_habilidades = hs;
+	this->_vida = v;
+	this->_cuantoPega = cP;
 }
 
 Vida Flor::vidaF(){
 	return this->_vida;
 }
+
 int Flor::cuantoPegaF(){
 	return this->_cuantoPega;
 }
-std::vector<Habilidad>& Flor::habilidadesF(){
+
+vector<Habilidad>& Flor::habilidadesF(){
 	return this->_habilidades;
 }
 
-void Flor::Mostrar(std::ostream& os){
-	os << "Flor {" << std::endl;
-	os << "Vida : " << this->_vida << std::endl;
-	os << "Pega : " << this->_cuantoPega << std::endl;
+void Flor::Mostrar(ostream& os){
+	os << "Flor {" << endl;
+	os << "Vida : " << this->_vida << endl;
+	os << "Pega : " << this->_cuantoPega << endl;
 	os << "Habilidades : ";
 	int i = 0;
 	int l = this->_habilidades.size();
@@ -91,11 +93,11 @@ void Flor::Mostrar(std::ostream& os){
 		os << tipoHabilidad(this->_habilidades[i]) << " ";
 		i++;
 	}
-	os << std::endl;
-	os << "}" << std::endl;
+	os << endl;
+	os << "}" << endl;
 }
 
-void Flor::Guardar(std::ostream& os){
+void Flor::Guardar(ostream& os){
 	os << "{ F " << this->_vida << " " << this->_cuantoPega << " [ ";
 	int i = 0;
 	int l = this->_habilidades.size();
@@ -106,28 +108,24 @@ void Flor::Guardar(std::ostream& os){
 	os << "] }";
 }
 
-void Flor::Cargar(std::istream& is){
-	std::string flor;
+void Flor::Cargar(istream& is){
+	string flor;
 	getline(is, flor, 'F');
 	getline(is, flor, ' ');
-	std::string vidaC;
+	string vidaC;
 	getline(is, vidaC, ' ');
-	this->_vida = std::atoi(vidaC.c_str());
-	std::string cuantoPegaC;
+	this->_vida = atoi(vidaC.c_str());
+	string cuantoPegaC;
 	getline(is, cuantoPegaC, ' ');
-	std::string basura;
+	string basura;
 	getline(is, basura, '[');
-	this->_cuantoPega = std::atoi(cuantoPegaC.c_str());
+	this->_cuantoPega = atoi(cuantoPegaC.c_str());
 	getline(is, flor, ' ');
-	std::string habF; 
+	string habF; 
 	while(habF.back() != ']'){
-		
-		
 		getline(is, habF, ' ');
-		
 		if(habF != "]"){
 			if(habF == "Atacar"){
-				
 				this->_habilidades.push_back(Atacar);
 			}
 			if(habF == "Explotar"){
@@ -137,6 +135,5 @@ void Flor::Cargar(std::istream& is){
 				this->_habilidades.push_back(Generar);
 			} 
 		}
-		// getline(is, habF, ' ');
 	}
 }

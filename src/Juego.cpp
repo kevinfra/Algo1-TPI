@@ -237,37 +237,37 @@ bool Juego::muyDeExactas()
     return (i == l || esFibonacciCasoBaseUno(ganados) || esFibonacciCasoBaseDos(ganados));
 }
 
-void Juego::Mostrar(std::ostream& os)
+void Juego::Mostrar(ostream& os)
 {
-	os << "Juego {" << std::endl;
-	os << "Flores : {" << std::endl;
+	os << "Juego {" << endl;
+	os << "Flores : {" << endl;
 	int i = 0;
 	int lFlores = this->_flores.size(); 
 	while (i < lFlores){
-		this->_flores[i].Mostrar(std::cout);
+		this->_flores[i].Mostrar(os);
 		i++;
 	}
-	os << "}" << std::endl;
-	os << "Vampiros : {" << std::endl;
+	os << "}" << endl;
+	os << "Vampiros : {" << endl;
 	int j = 0;
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
-		this->_vampiros[j].Mostrar(std::cout);
+		this->_vampiros[j].Mostrar(os);
 		j++;	
 	}
-	os << "}" << std::endl;
-	os << "Niveles : {" << std::endl;
+	os << "}" << endl;
+	os << "Niveles : {" << endl;
 	 int n = 0;
 	int lNiveles = this->_niveles.size();
 	while(n < lNiveles){
-		this->_niveles[n].Mostrar(std::cout);
+		this->_niveles[n].Mostrar(os);
 		n++;
 	}
-	os << "}" << std::endl;
-	os << "}" << std::endl;
+	os << "}" << endl;
+	os << "}" << endl;
 }
 
-void Juego::Guardar(std::ostream& os){
+void Juego::Guardar(ostream& os){
 	os << "{ J [ ";
 	int i = 0;
 	int lFlores = this->_flores.size(); 
@@ -354,9 +354,9 @@ void Juego::Guardar(std::ostream& os){
 // 	os << " ]";
 // }
 
-void Juego::Cargar(std::iostream& is)
+void Juego::Cargar(iostream& is)
 {
-	std::string juego;
+	string juego;
 	getline(is, juego, 'J');
 	getline(is, juego, ' ');
 	int f = 0;

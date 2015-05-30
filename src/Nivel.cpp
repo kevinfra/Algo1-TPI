@@ -1,32 +1,34 @@
 ﻿#include "Nivel.h"
 #include <cmath>
 
-bool spawningOrdenado(std::vector<VampiroEnEspera>& spawninglist){
-  int v = 1;
-  int l = spawninglist.size();
-  bool b = false;
-  if(l == 1){b = true;}
-  while(v < l){
-    if(spawninglist[v-1].turno <= spawninglist[v].turno){
-      if(spawninglist[v-1].fila <= spawninglist[v].fila){
-        b = true;
-      }
-    }
-    v++;
-  }
-  return b;
-}
+using namespace std;
 
-bool spawningValido(std::vector<VampiroEnEspera>& spawninglist, int alto){
-  int v = 0;
-  int l = spawninglist.size();
-  while(v < l && spawninglist[v].fila>0 && spawninglist[v].fila <= alto && spawninglist[v].turno >= 0){
-    v++;
-  }
-  return v == l;
-}
+// bool spawningOrdenado(vector<VampiroEnEspera>& spawninglist){
+//   int v = 1;
+//   int l = spawninglist.size();
+//   bool b = false;
+//   if(l == 1){b = true;}
+//   while(v < l){
+//     if(spawninglist[v-1].turno <= spawninglist[v].turno){
+//       if(spawninglist[v-1].fila <= spawninglist[v].fila){
+//         b = true;
+//       }
+//     }
+//     v++;
+//   }
+//   return b;
+// }
 
-bool noHayFlorEnPos(std::vector<FlorEnJuego> flores, Posicion pos){
+// bool spawningValido(vector<VampiroEnEspera>& spawninglist, int alto){
+//   int v = 0;
+//   int l = spawninglist.size();
+//   while(v < l && spawninglist[v].fila>0 && spawninglist[v].fila <= alto && spawninglist[v].turno >= 0){
+//     v++;
+//   }
+//   return v == l;
+// }
+
+bool noHayFlorEnPos(vector<FlorEnJuego> flores, Posicion pos){
   int l = flores.size();
   int v = 0;
   while(v < l && !(flores[v].pos.x == pos.x && flores[v].pos.y == pos.y)){
@@ -35,7 +37,7 @@ bool noHayFlorEnPos(std::vector<FlorEnJuego> flores, Posicion pos){
   return v == l;
 }
 
-int danoFlor(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
+int danoFlor(FlorEnJuego flor, vector<VampiroEnJuego> vampiros){
   int cp = 0;
   int v = 0;
   int l = vampiros.size();
@@ -48,7 +50,7 @@ int danoFlor(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
   return cp;
 }
 
-bool hayVampiroEnPos(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
+bool hayVampiroEnPos(FlorEnJuego flor, vector<VampiroEnJuego> vampiros){
   int lv = vampiros.size();
   int v = 0;
   while(v < lv && !(vampiros[v].pos.x == flor.pos.x && vampiros[v].pos.y == flor.pos.y)){
@@ -66,12 +68,12 @@ bool tieneHabilidad(Habilidad h, FlorEnJuego flor){
   return v < lh;
 }
 
-bool florExplota(FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
+bool florExplota(FlorEnJuego flor, vector<VampiroEnJuego> vampiros){
   return tieneHabilidad(Explotar, flor) && hayVampiroEnPos(flor, vampiros);
 }
 
-std::vector<FlorEnJuego> floresVivas(std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
-  std::vector<FlorEnJuego> nuevaListaFlores;
+vector<FlorEnJuego> floresVivas(vector<FlorEnJuego> flores, vector<VampiroEnJuego> vampiros){
+  vector<FlorEnJuego> nuevaListaFlores;
   int l = flores.size();
   int v = 0;
   while(v < l){
@@ -83,7 +85,7 @@ std::vector<FlorEnJuego> floresVivas(std::vector<FlorEnJuego> flores, std::vecto
   return nuevaListaFlores;
 }
 
-void floresIguales(std::vector<FlorEnJuego>& preFlores, std::vector<FlorEnJuego> flores){
+void floresIguales(vector<FlorEnJuego>& preFlores, vector<FlorEnJuego> flores){
   int v = 0;
   int lFlores = flores.size();
   int lPreFlores = preFlores.size();
@@ -104,7 +106,7 @@ bool enMira(FlorEnJuego flor, VampiroEnJuego vamp){
   return ((vamp.pos.y == flor.pos.y) && (vamp.pos.x >= flor.pos.x));
 }
 
-bool noIntercepta(VampiroEnJuego vamp, FlorEnJuego flor, std::vector<VampiroEnJuego> vampiros){
+bool noIntercepta(VampiroEnJuego vamp, FlorEnJuego flor, vector<VampiroEnJuego> vampiros){
   int v = 0;
   int largoVampiros = vampiros.size();
   while(v < largoVampiros && !(enMira(flor, vampiros[v]) && (vampiros[v].pos.x <= vamp.pos.x))){
@@ -113,7 +115,7 @@ bool noIntercepta(VampiroEnJuego vamp, FlorEnJuego flor, std::vector<VampiroEnJu
   return v == largoVampiros;
 }
 
-int danoV(VampiroEnJuego vamp, std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
+int danoV(VampiroEnJuego vamp, vector<FlorEnJuego> flores, vector<VampiroEnJuego> vampiros){
   int n = 0;
   int largoFlores = flores.size();
   int golpeFlores = 0;
@@ -126,7 +128,7 @@ int danoV(VampiroEnJuego vamp, std::vector<FlorEnJuego> flores, std::vector<Vamp
   return golpeFlores;
 }
 
-bool hayFlorSobreviviente(Posicion p, std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
+bool hayFlorSobreviviente(Posicion p, vector<FlorEnJuego> flores, vector<VampiroEnJuego> vampiros){
   int x = 0;
   int largoFlores = flores.size();
   while(x < largoFlores && !(flores[x].pos.x == p.x && flores[x].pos.y == p.y && flores[x].vida - danoFlor(flores[x], vampiros) > 0)){
@@ -135,7 +137,7 @@ bool hayFlorSobreviviente(Posicion p, std::vector<FlorEnJuego> flores, std::vect
   return x < largoFlores;
 }
 
-bool hayFlorSobrevivienteExplota(Posicion p, std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
+bool hayFlorSobrevivienteExplota(Posicion p, vector<FlorEnJuego> flores, vector<VampiroEnJuego> vampiros){
   int n = 0;
   int largoFlores = flores.size();
   while(n < largoFlores && !(flores[n].pos.x == p.x && flores[n].pos.y == p.y && tieneHabilidad(Explotar, flores[n]))){
@@ -153,7 +155,7 @@ void avanzaV(Posicion &p, VampiroEnJuego vamp){
   p.x = p.x - 1;
 }
 
-Posicion seMueve(VampiroEnJuego vamp, std::vector<FlorEnJuego> flores, std::vector<VampiroEnJuego> vampiros){
+Posicion seMueve(VampiroEnJuego vamp, vector<FlorEnJuego> flores, vector<VampiroEnJuego> vampiros){
   Posicion p(vamp.pos.x, vamp.pos.y);
   if(hayFlorSobrevivienteExplota(p, flores, vampiros)){
     p.x++;
@@ -163,7 +165,7 @@ Posicion seMueve(VampiroEnJuego vamp, std::vector<FlorEnJuego> flores, std::vect
   return p;
 }
 
-std::vector<VampiroEnJuego> vampirosVivos(std::vector<FlorEnJuego> preFlores, std::vector<VampiroEnJuego> preVampiros){
+vector<VampiroEnJuego> vampirosVivos(vector<FlorEnJuego> preFlores, vector<VampiroEnJuego> preVampiros){
   int i = 0;
   int largoVampiros = preVampiros.size();
   std::vector<VampiroEnJuego> vampiros;
@@ -177,7 +179,7 @@ std::vector<VampiroEnJuego> vampirosVivos(std::vector<FlorEnJuego> preFlores, st
   return vampiros;
 }
 
-int solesGenerados(std::vector<FlorEnJuego> preFlores, int preSoles){
+int solesGenerados(vector<FlorEnJuego> preFlores, int preSoles){
   int s = preSoles+1;
   int v = 0;
   int lF = preFlores.size();
@@ -190,8 +192,8 @@ int solesGenerados(std::vector<FlorEnJuego> preFlores, int preSoles){
   return s;
 }
 
-void actualizarSpawning(std::vector<VampiroEnEspera>& spaw, int turno){
-  std::vector<VampiroEnEspera> preSpaw = spaw;
+void actualizarSpawning(vector<VampiroEnEspera>& spaw, int turno){
+  vector<VampiroEnEspera> preSpaw = spaw;
   int v = 0;
   int largoSpaw = spaw.size();
   while(v < largoSpaw){
@@ -207,7 +209,7 @@ void actualizarSpawning(std::vector<VampiroEnEspera>& spaw, int turno){
   }
 }
 
-bool vampiroEnColumnaCero(std::vector<VampiroEnJuego> vampiros){
+bool vampiroEnColumnaCero(vector<VampiroEnJuego> vampiros){
   int v = 0;
   int largoVamps = vampiros.size();
   while(v < largoVamps && !(vampiros[v].pos.x == 0)){
@@ -216,7 +218,7 @@ bool vampiroEnColumnaCero(std::vector<VampiroEnJuego> vampiros){
   return v < largoVamps;
 }
 
-bool floresDesordenadas(std::vector<FlorEnJuego> floresOrdenadas){
+bool floresDesordenadas(vector<FlorEnJuego> floresOrdenadas){
   bool b;
   int largoF = floresOrdenadas.size();
   int v = 1;
@@ -236,13 +238,13 @@ bool floresDesordenadas(std::vector<FlorEnJuego> floresOrdenadas){
   return b;
 }
 
-void swapF(int a, int b, std::vector<FlorEnJuego>& floresOrdenadas){
+void swapF(int a, int b, vector<FlorEnJuego>& floresOrdenadas){
   FlorEnJuego florC = floresOrdenadas[a];
   floresOrdenadas[a] = floresOrdenadas[b];
   floresOrdenadas[b] = florC;
 }
 
-void ordenarFlores(std::vector<FlorEnJuego>& floresOrdenadas){
+void ordenarFlores(vector<FlorEnJuego>& floresOrdenadas){
   int b;
   int largoFlores = floresOrdenadas.size();
   while(floresDesordenadas(floresOrdenadas)){
@@ -274,7 +276,7 @@ bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
   return b;
 }
 */
-bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
+bool hayPatron(vector<FlorEnJuego> floresOrdenadas){
   int v = 1;
   int largoF = floresOrdenadas.size();
   while(v < largoF && tieneHabilidad(Atacar,floresOrdenadas[v-1]) == !(tieneHabilidad(Atacar,floresOrdenadas[v]))){
@@ -285,28 +287,12 @@ bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
 
 Nivel::Nivel(){}
 
-Nivel::Nivel(int ancho, int alto, int soles, std::vector<VampiroEnEspera>& spawninglist){
-  if(ancho>0){
-    this->_ancho = ancho;
-  }else{
-    std::cerr << "ancho no valido" << std::endl;
-  }
-  if(alto > 0){
-    this->_alto = alto;
-  }else{
-    std::cerr << "alto no válido" << std::endl;
-  }
-  if(soles >= 0){
-    this->_soles = soles;
-  }else{
-    std::cerr << "cantidad de soles inválida" << std::endl;
-  }
+Nivel::Nivel(int ancho, int alto, int soles, vector<VampiroEnEspera>& spawninglist){
+  this->_ancho = ancho;
+  this->_alto = alto;
+  this->_soles = soles;
   this->_turno = 0;
-  int t = spawninglist.size();
-  int v = 0;
-  if(spawningValido(spawninglist, alto) && spawningOrdenado(spawninglist)){
-    this->_spawning = spawninglist;
-  }
+  this->_spawning = spawninglist;
 }
 
 int Nivel::anchoN(){
@@ -325,29 +311,26 @@ int Nivel::solesN(){
   return this->_soles;
 }
 
-std::vector<FlorEnJuego>& Nivel::floresN(){
+vector<FlorEnJuego>& Nivel::floresN(){
   return this->_flores;
 }
 
-std::vector<VampiroEnJuego>& Nivel::vampirosN(){
+vector<VampiroEnJuego>& Nivel::vampirosN(){
   return this->_vampiros;
 }
 
-std::vector<VampiroEnEspera>& Nivel::spawningN(){
+vector<VampiroEnEspera>& Nivel::spawningN(){
   return this->_spawning;
 }
 
 void Nivel::agregarFlor(Flor f, Posicion p){
-  if(noHayFlorEnPos(this->_flores, p) && this->_soles >= pow(2,f.habilidadesF().size())){
-    this->_soles = this->_soles - pow(2,f.habilidadesF().size());
-    this->_flores.push_back(FlorEnJuego(f,p,f.vidaF()));
-  }
+  this->_soles = this->_soles - pow(2,f.habilidadesF().size());
+  this->_flores.push_back(FlorEnJuego(f,p,f.vidaF()));
 }
 
 void Nivel::pasarTurno(){
-  if(!this->terminado()){
     this->_turno++;
-    std::vector<FlorEnJuego> preFlores;
+    vector<FlorEnJuego> preFlores;
     floresIguales(preFlores, this->_flores);
     floresIguales(this->_flores, floresVivas(this->_flores, this->_vampiros));
     this->_vampiros = vampirosVivos(preFlores, this->_vampiros);
@@ -361,7 +344,6 @@ void Nivel::pasarTurno(){
       vs++;
     }
     actualizarSpawning(this->_spawning, this->_turno);
-  }
 }
 
 bool Nivel::terminado(){
@@ -369,7 +351,7 @@ bool Nivel::terminado(){
 }
 
 bool Nivel::obsesivoCompulsivo(){
-  std::vector<FlorEnJuego> floresOrdenadas = this->_flores;
+  vector<FlorEnJuego> floresOrdenadas = this->_flores;
   ordenarFlores(floresOrdenadas);
   return hayPatron(floresOrdenadas);
 }
@@ -378,42 +360,42 @@ void Nivel::comprarSoles(int n){
   this->_soles = this->_soles + n;
 }
 
-void Nivel::Mostrar(std::ostream& os)
+void Nivel::Mostrar(ostream& os)
 {
-  os << "Nivel {" << std::endl;
-  os << "Ancho : " << this->_ancho << std::endl;
-  os << "Alto : " << this->_alto << std::endl;
-  os << "Turno : " << this->_turno << std::endl;
-  os << "Soles : " << this->_soles << std::endl;
-  os << "Flores : { " << std::endl;
+  os << "Nivel {" << endl;
+  os << "Ancho : " << this->_ancho << endl;
+  os << "Alto : " << this->_alto << endl;
+  os << "Turno : " << this->_turno << endl;
+  os << "Soles : " << this->_soles << endl;
+  os << "Flores : { " << endl;
   int i = 0;
   int lFlores = this->_flores.size();
   while (i < lFlores){
-    this->_flores[i].flor.Mostrar(std::cout);
+    this->_flores[i].flor.Mostrar(os);
     i++;
   }
-  os << "}" << std::endl;
-  os << "Vampiros : { " << std::endl;
+  os << "}" << endl;
+  os << "Vampiros : { " << endl;
   int j = 0;
   int lVampiros = this->_vampiros.size();
   while(j < lVampiros){
-    this->_vampiros[j].vampiro.Mostrar(std::cout);
+    this->_vampiros[j].vampiro.Mostrar(os);
     j++;
   }
-  os << "}" << std::endl;
-  os << "Spawning : {" << std::endl;
+  os << "}" << endl;
+  os << "Spawning : {" << endl;
   int s = 0;
   int lSpawning = this->_spawning.size();
   while(s < lSpawning){
-    this->_spawning[s].vampiro.Mostrar(std::cout);
+    this->_spawning[s].vampiro.Mostrar(os);
     s++;
   }
-  os << std::endl;
-  os << "}" << std::endl;
-  os << "}" << std::endl;
+  os << endl;
+  os << "}" << endl;
+  os << "}" << endl;
 }
 
-void Nivel::Guardar(std::ostream& os)
+void Nivel::Guardar(ostream& os)
 {
   os << "{ N " << this->_ancho << " " << this->_alto << " " << this->_turno << " " << this->_soles << " [";
   int i = 0;
@@ -442,9 +424,7 @@ void Nivel::Guardar(std::ostream& os)
 	os << " " << this->_spawning[s].fila << " " << this->_spawning[s].turno << " )";
     s++;
   }
-
-	os << " ] }" << std::endl;
-
+	os << " ] }" << endl;
 }
 
 // void Nivel::Guardar(std::ostream& os)
@@ -484,45 +464,45 @@ void Nivel::Guardar(std::ostream& os)
 // 	os << "] }";
 // }
 
-void Nivel::Cargar(std::istream& is){
-  std::string nivel;
+void Nivel::Cargar(istream& is){
+  string nivel;
   getline(is, nivel, 'N');
   getline(is, nivel, ' ');
-  std::string anchoNivel;
+  string anchoNivel;
   getline(is, anchoNivel, ' ');
-  this->_ancho = std::atoi(anchoNivel.c_str());
-  std::string altoNivel;
+  this->_ancho = atoi(anchoNivel.c_str());
+  string altoNivel;
   getline(is, altoNivel, ' ');
-  this->_alto = std::atoi(altoNivel.c_str());
-  std::string turnoNivel;
+  this->_alto = atoi(altoNivel.c_str());
+  string turnoNivel;
   getline(is, turnoNivel, ' ');
-  this->_turno = std::atoi(turnoNivel.c_str());
-  std::string solesNivel;
+  this->_turno = atoi(turnoNivel.c_str());
+  string solesNivel;
   getline(is, solesNivel, ' ');
-  this->_soles = std::atoi(solesNivel.c_str());
-  std::string basura;
+  this->_soles = atoi(solesNivel.c_str());
+  string basura;
   getline(is, basura, ' ');
-  std::string cambioTipo;
+  string cambioTipo;
   getline(is, cambioTipo, ' ');
   char ultimoCambio=cambioTipo.back();
   while(ultimoCambio != ']') {
-    std::cout << "entro a flor" << std::endl;
+    cout << "entro a flor" << endl;
     Flor cargaflor;
     Posicion t;
     Vida v;
     cargaflor.Cargar(is);
     getline(is, basura, '(');
     getline(is, basura, ' ');
-    std::string posicionFx;
+    string posicionFx;
     getline(is, posicionFx, ' ');
-    t.x = std::atoi(posicionFx.c_str());
-    std::string posicionFy;
+    t.x = atoi(posicionFx.c_str());
+    string posicionFy;
     getline(is, posicionFy, ' ');
-    t.y = std::atoi(posicionFy.c_str());
+    t.y = atoi(posicionFy.c_str());
     getline(is, basura, ' ');
-    std::string vidaFi;
+    string vidaFi;
     getline(is, vidaFi, ' ');
-    v = std::atoi(vidaFi.c_str());
+    v = atoi(vidaFi.c_str());
     getline(is, basura, ' ');
     FlorEnJuego fCargar(cargaflor,t,v);
     this->_flores.push_back(fCargar);
@@ -533,23 +513,23 @@ void Nivel::Cargar(std::istream& is){
   getline(is, cambioTipo, ' ');
   ultimoCambio = cambioTipo.back();
   while(ultimoCambio != ']') {
-    std::cout << "entro a vampiro" << std::endl;
+    cout << "entro a vampiro" << endl;
     Vampiro cargaVampiro;
     Posicion p;
     Vida v;
     cargaVampiro.Cargar(is);
     getline(is, basura, '(');
     getline(is, basura, ' ');
-    std::string posicionVx;
+    string posicionVx;
     getline(is, posicionVx, ' ');
     p.x = std::atoi(posicionVx.c_str());
-    std::string posicionVy;
+    string posicionVy;
     getline(is, posicionVy, ' ');
     p.y = std::atoi(posicionVy.c_str());
     getline(is, basura, ' ');
-    std::string vidaVj;
+    string vidaVj;
     getline(is, vidaVj, ' ');
-    v = std::atoi(vidaVj.c_str());
+    v = atoi(vidaVj.c_str());
     VampiroEnJuego vCargar(cargaVampiro, p, v);
     this->_vampiros.push_back(vCargar);
     getline(is, basura, ' ');
@@ -560,17 +540,17 @@ void Nivel::Cargar(std::istream& is){
   getline(is, cambioTipo, ' ');
   ultimoCambio = cambioTipo.back();
   while(ultimoCambio != ']'){
-    std::cout << "entro a spawning" << std::endl;
+    cout << "entro a spawning" << endl;
     Vampiro cargarVS;
     int cargarFila;
     int cargarTurnoS;
     cargarVS.Cargar(is);
     getline(is, basura, ' ');
-    std::string fila;
+    string fila;
     getline(is, fila, ' ');
-    cargarFila = std::atoi(fila.c_str());
+    cargarFila = atoi(fila.c_str());
     getline(is, basura, ' ');
-    std::string turnoVs;
+    string turnoVs;
     getline(is, turnoVs, ' ');
     cargarTurnoS = std::atoi(turnoVs.c_str());
     VampiroEnEspera vSpawC(cargarVS,cargarFila,cargarTurnoS);
