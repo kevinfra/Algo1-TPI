@@ -128,7 +128,7 @@ Juego::Juego(vector<Flor>& flores, vector<Vampiro>& vamps)
 	this->_niveles = vector<Nivel>();
 	this->_nivelActual = 0;
 	this->_vampiros = sinRepetidosV(vamps);
-	this->_flores = sinRepetidosF(flores);	
+	this->_flores = sinRepetidosF(flores);
 }
 
 
@@ -242,7 +242,7 @@ void Juego::Mostrar(ostream& os)
 	os << "Juego {" << endl;
 	os << "Flores : {" << endl;
 	int i = 0;
-	int lFlores = this->_flores.size(); 
+	int lFlores = this->_flores.size();
 	while (i < lFlores){
 		this->_flores[i].Mostrar(os);
 		i++;
@@ -253,7 +253,7 @@ void Juego::Mostrar(ostream& os)
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
 		this->_vampiros[j].Mostrar(os);
-		j++;	
+		j++;
 	}
 	os << "}" << endl;
 	os << "Niveles : {" << endl;
@@ -270,7 +270,7 @@ void Juego::Mostrar(ostream& os)
 void Juego::Guardar(ostream& os){
 	os << "{ J [ ";
 	int i = 0;
-	int lFlores = this->_flores.size(); 
+	int lFlores = this->_flores.size();
 	while (i < lFlores){
 		this->_flores[i].Guardar(os);
 		i++;
@@ -279,7 +279,7 @@ void Juego::Guardar(ostream& os){
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
 		this->_vampiros[j].Guardar(os);
-		j++;	
+		j++;
 	}
 	int n = 0;
 	int lNiveles = this->_niveles.size();
@@ -293,7 +293,7 @@ void Juego::Guardar(ostream& os){
 // {
 // 	os << "{ J [ ";
 // 	int i = 0;
-// 	int lFlores = this->_flores.size(); 
+// 	int lFlores = this->_flores.size();
 // 	while (i < lFlores){
 // 		os << "{ F " << this->_flores[i].vidaF() << " " << this->_flores[i].cuantoPegaF() << " [ ";
 // 		int k = 0;
@@ -310,10 +310,10 @@ void Juego::Guardar(ostream& os){
 // 	int lVampiros = this->_vampiros.size();
 // 	while(j < lVampiros){
 // 		os << "{ V " << this->_vampiros[j].claseV() << " " << this->_vampiros[j].vidaV() << " " << this->_vampiros[j].cuantoPegaV() << " ";
-// 		j++;	
+// 		j++;
 // 	}
 // 	os << "] } [ ";
-	
+
 // 	int n = 0;
 // 	int lNiveles = this->_niveles.size();
 // 	while(n < lNiveles){
@@ -331,14 +331,14 @@ void Juego::Guardar(ostream& os){
 // 			os << "] } ( " << this->_niveles[n].floresN()[f].pos.x << " " << this->_niveles[n].floresN()[f].pos.y << " ) " << this->_niveles[n].floresN()[f].vida <<" ) ";
 // 			f++;
 // 		}
-	
+
 // 		os << "] [ ";
 // 		int v = 0;
 // 		int lVampiros = this->_niveles[n].vampirosN().size();
 // 		while(v < lVampiros){
-// 			os << "( { V " << this->_niveles[n].vampirosN()[v].vampiro.claseV() << " " << this->_niveles[n].vampirosN()[v].vampiro.vidaV() << " " << this->_niveles[n].vampirosN()[v].vampiro.cuantoPegaV() << " } ( " << this->_niveles[n].vampirosN()[v].pos.x; 
+// 			os << "( { V " << this->_niveles[n].vampirosN()[v].vampiro.claseV() << " " << this->_niveles[n].vampirosN()[v].vampiro.vidaV() << " " << this->_niveles[n].vampirosN()[v].vampiro.cuantoPegaV() << " } ( " << this->_niveles[n].vampirosN()[v].pos.x;
 // 			os << " " << this->_niveles[n].vampirosN()[v].pos.y << " ) " << this->_niveles[n].vampirosN()[v].vida << " ) ";
-// 			v++;	
+// 			v++;
 // 		}
 // 		os << "] [ ";
 // 		int s = 0;
@@ -358,23 +358,39 @@ void Juego::Cargar(iostream& is)
 {
 	string juego;
 	getline(is, juego, 'J');
-	getline(is, juego, ' ');
-	int f = 0;
-	int listaFloresJ = this->_flores.size();
-	while (f < listaFloresJ) {
-		this->_flores[f].Cargar(is);
-		f++;
+	string basura;
+	string cambioTipo;
+	getline(is, cambioTipo, ' ');
+	char ultimoCambio=cambioTipo.back();
+	while (ultimoCambio != ']') {
+		Flor cargaF;
+		cargaF.Cargar(is);
+		this->_flores.push_back(cargaF);
+		getline(is, basura, ' ');
+		getline(is, cambioTipo, ' ');
+		ultimoCambio = cambioTipo.back();
 	}
-	int v = 0;
-	int listaVampirosJ = this->_vampiros.size();
-	while (v < listaVampirosJ) {
-		this->_vampiros[v].Cargar(is);
-		v++;
+	getline(is, basura, ' ');
+	getline(is, cambioTipo, ' ');
+	ultimoCambio = cambioTipo.back();
+	while (ultimoCambio != ']') {
+		Vampiro cargaF;
+		cargaF.Cargar(is);
+		this->_vampiros.push_back(cargaF);
+		getline(is, basura, ' ');
+		getline(is, cambioTipo, ' ');
+		ultimoCambio = cambioTipo.back();
 	}
-	int n = 0;
-	int listaNivelesJ = this->_niveles.size();
-	while (n < listaNivelesJ) {
-		this->_niveles[n].Cargar(is);
-		n++;
+	getline(is, basura, ' ');
+	getline(is, cambioTipo, ' ');
+	ultimoCambio = cambioTipo.back();
+	while (ultimoCambio != ']') {
+		Nivel cargaN;
+		cargaN.Cargar(is);
+		this->_niveles.push_back(cargaN);
+		getline(is, basura, ' ');
+		getline(is, cambioTipo, ' ');
+		ultimoCambio = cambioTipo.back();
 	}
+	this->_nivelActual = 0;
 }

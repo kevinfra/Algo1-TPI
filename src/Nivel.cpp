@@ -486,7 +486,6 @@ void Nivel::Cargar(istream& is){
   getline(is, cambioTipo, ' ');
   char ultimoCambio=cambioTipo.back();
   while(ultimoCambio != ']') {
-    cout << "entro a flor" << endl;
     Flor cargaflor;
     Posicion t;
     Vida v;
@@ -513,7 +512,6 @@ void Nivel::Cargar(istream& is){
   getline(is, cambioTipo, ' ');
   ultimoCambio = cambioTipo.back();
   while(ultimoCambio != ']') {
-    cout << "entro a vampiro" << endl;
     Vampiro cargaVampiro;
     Posicion p;
     Vida v;
@@ -540,7 +538,6 @@ void Nivel::Cargar(istream& is){
   getline(is, cambioTipo, ' ');
   ultimoCambio = cambioTipo.back();
   while(ultimoCambio != ']'){
-    cout << "entro a spawning" << endl;
     Vampiro cargarVS;
     int cargarFila;
     int cargarTurnoS;
