@@ -3,31 +3,6 @@
 
 using namespace std;
 
-// bool spawningOrdenado(vector<VampiroEnEspera>& spawninglist){
-//   int v = 1;
-//   int l = spawninglist.size();
-//   bool b = false;
-//   if(l == 1){b = true;}
-//   while(v < l){
-//     if(spawninglist[v-1].turno <= spawninglist[v].turno){
-//       if(spawninglist[v-1].fila <= spawninglist[v].fila){
-//         b = true;
-//       }
-//     }
-//     v++;
-//   }
-//   return b;
-// }
-
-// bool spawningValido(vector<VampiroEnEspera>& spawninglist, int alto){
-//   int v = 0;
-//   int l = spawninglist.size();
-//   while(v < l && spawninglist[v].fila>0 && spawninglist[v].fila <= alto && spawninglist[v].turno >= 0){
-//     v++;
-//   }
-//   return v == l;
-// }
-
 bool noHayFlorEnPos(vector<FlorEnJuego> flores, Posicion pos){
   int l = flores.size();
   int v = 0;
@@ -257,25 +232,7 @@ void ordenarFlores(vector<FlorEnJuego>& floresOrdenadas){
     }
   }
 }
-/*
-bool hayPatron(std::vector<FlorEnJuego> floresOrdenadas){
-  bool b = false;
-  int v = 1;
-  int largoF = floresOrdenadas.size();
-  if(largoF == 2 && (tieneHabilidad(Atacar, floresOrdenadas[0]) && !tieneHabilidad(Atacar, floresOrdenadas[1])) || (!tieneHabilidad(Atacar, floresOrdenadas[0]) && tieneHabilidad(Atacar, floresOrdenadas[1]))){
-    b = true;
-    v = largoF;
-  }
-  while(v < largoF-1){
-    if(((tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (!tieneHabilidad(Atacar, floresOrdenadas[v])) && (tieneHabilidad(Atacar, floresOrdenadas[v+1]))) || ((!tieneHabilidad(Atacar, floresOrdenadas[v-1])) && (tieneHabilidad(Atacar, floresOrdenadas[v])) && (!tieneHabilidad(Atacar, floresOrdenadas[v+1])))){
-      b = true;
-    }else{
-      v = largoF;
-    }
-  }
-  return b;
-}
-*/
+
 bool hayPatron(vector<FlorEnJuego> floresOrdenadas){
   int v = 1;
   int largoF = floresOrdenadas.size();
@@ -426,43 +383,6 @@ void Nivel::Guardar(ostream& os)
   }
 	os << " ] }" << endl;
 }
-
-// void Nivel::Guardar(std::ostream& os)
-// {
-// 	os << "{ N " << this->_ancho << " " << this->_alto << " " << this->_turno << " " << this->_soles << " [ ";
-// 	int i = 0;
-// 	int lFlores = this->_flores.size();
-// 	while (i < lFlores){
-// 		os << "( { F " << this->_flores[i].flor.vidaF() << " " << this->_flores[i].flor.cuantoPegaF() << " [ ";
-// 		int k = 0;
-// 		int lHabilidadesFlores = this->_flores[i].flor.habilidadesF().size();
-// 		while(k < lHabilidadesFlores){
-// 			os << this->_flores[i].flor.habilidadesF()[k] << " ";
-// 			k++;
-// 		}
-// 		os << "] } ( " << this->_flores[i].pos.x << " " << this->_flores[i].pos.y << " ) " << this->_flores[i].vida << " ) ";
-// 		i++;
-// 	}
-
-// 	os << "] [ ";
-// 	int j = 0;
-// 	int lVampiros = this->_vampiros.size();
-// 	while(j < lVampiros){
-// 		os << "( { V " << this->_vampiros[j].vampiro.claseV() << " " << this->_vampiros[j].vampiro.vidaV() << " " << this->_vampiros[j].vampiro.cuantoPegaV() << " } ( " << this->_vampiros[j].pos.x;
-
-// 		os << " " << this->_vampiros[j].pos.y << " ) " << this->_vampiros[j].vida << " ) ";
-// 		j++;
-// 	}
-// 	os << "] [ ";
-// 	int s = 0;
-// 	int lSpawning = this->_spawning.size();
-// 	while(s < lSpawning){
-// 		os << "( { V " << this->_spawning[s].vampiro.claseV() << " " << this->_spawning[s].vampiro.vidaV() << " " << this->_spawning[s].vampiro.cuantoPegaV() << " } " << this->_spawning[s].fila;
-// 		os << " " << this->_spawning[s].turno << " ) ";
-//     s++;
-// 	}
-// 	os << "] }";
-// }
 
 void Nivel::Cargar(istream& is){
   string nivel;

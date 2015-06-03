@@ -275,84 +275,22 @@ void Juego::Guardar(ostream& os){
 		this->_flores[i].Guardar(os);
 		i++;
 	}
+	os << " ] [ ";
 	int j = 0;
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
 		this->_vampiros[j].Guardar(os);
 		j++;
 	}
+	os << " ] [ ";
 	int n = 0;
 	int lNiveles = this->_niveles.size();
 	while(n < lNiveles){
 		this->_niveles[n].Guardar(os);
 		n++;
 	}
+	os << " ] }" << endl;
 }
-
-// void Juego::Guardar(std::ostream& os)
-// {
-// 	os << "{ J [ ";
-// 	int i = 0;
-// 	int lFlores = this->_flores.size();
-// 	while (i < lFlores){
-// 		os << "{ F " << this->_flores[i].vidaF() << " " << this->_flores[i].cuantoPegaF() << " [ ";
-// 		int k = 0;
-// 		int lHabilidadesFlores = this->_flores[i].habilidadesF().size();
-// 		while(k < lHabilidadesFlores){
-// 			os << this->_flores[i].habilidadesF()[k] << " ";
-// 			k++;
-// 		}
-// 		os << "] } ";
-// 		i++;
-// 	}
-// 	os << "] [ ";
-// 	int j = 0;
-// 	int lVampiros = this->_vampiros.size();
-// 	while(j < lVampiros){
-// 		os << "{ V " << this->_vampiros[j].claseV() << " " << this->_vampiros[j].vidaV() << " " << this->_vampiros[j].cuantoPegaV() << " ";
-// 		j++;
-// 	}
-// 	os << "] } [ ";
-
-// 	int n = 0;
-// 	int lNiveles = this->_niveles.size();
-// 	while(n < lNiveles){
-// 		os << "{ N " << this->_niveles[n].anchoN() << " " << this->_niveles[n].altoN() << " " << this->_niveles[n].turnoN() << " " << this->_niveles[n].solesN() << " [ ";
-// 		int f = 0;
-// 		int lFloresN = this->_niveles[n].floresN().size();
-// 		while (f < lFloresN){
-// 			os << "( { F " << this->_flores[f].vidaF() << " " << this->_flores[f].cuantoPegaF() << " [ ";
-// 			int h = 0;
-// 			int lHabilidadesFlores = this->_flores[f].habilidadesF().size();
-// 			while(h < lHabilidadesFlores){
-// 				os << this->_flores[f].habilidadesF()[h] << " ";
-// 				h++;
-// 			}
-// 			os << "] } ( " << this->_niveles[n].floresN()[f].pos.x << " " << this->_niveles[n].floresN()[f].pos.y << " ) " << this->_niveles[n].floresN()[f].vida <<" ) ";
-// 			f++;
-// 		}
-
-// 		os << "] [ ";
-// 		int v = 0;
-// 		int lVampiros = this->_niveles[n].vampirosN().size();
-// 		while(v < lVampiros){
-// 			os << "( { V " << this->_niveles[n].vampirosN()[v].vampiro.claseV() << " " << this->_niveles[n].vampirosN()[v].vampiro.vidaV() << " " << this->_niveles[n].vampirosN()[v].vampiro.cuantoPegaV() << " } ( " << this->_niveles[n].vampirosN()[v].pos.x;
-// 			os << " " << this->_niveles[n].vampirosN()[v].pos.y << " ) " << this->_niveles[n].vampirosN()[v].vida << " ) ";
-// 			v++;
-// 		}
-// 		os << "] [ ";
-// 		int s = 0;
-// 		int lSpawning = this->_niveles[n].spawningN().size();
-// 		while(s < lSpawning){
-// 			os << "( { V " << this->_niveles[n].spawningN()[s].vampiro.claseV() << " " << this->_niveles[n].spawningN()[s].vampiro.vidaV() << " " << this->_niveles[n].spawningN()[s].vampiro.cuantoPegaV() << " } " << this->_niveles[n].spawningN()[s].fila;
-// 			os << " " << this->_niveles[n].spawningN()[s].turno << " ) ";
-// 			s++;
-// 		}
-// 		os << "] }";
-// 		n++;
-// 	}
-// 	os << " ]";
-// }
 
 void Juego::Cargar(iostream& is)
 {

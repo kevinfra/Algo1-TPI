@@ -2,54 +2,6 @@
 
 using namespace std;
 
-// bool perteneceH(Habilidad h, vector<Habilidad> hs){
-// 	bool b = false;
-// 	int l = hs.size();
-// 	int i = 0;
-// 	while(i<l){
-// 		if(h == hs[i]){
-// 			b = true;
-// 		}
-// 		i++;
-// 	}
-// 	return b;
-
-// }
-
-// vector<Habilidad> sinRepetidosH(vector<Habilidad> hs){
-// 	vector<Habilidad> nhw;
-// 	int l = hs.size();
-// 	int i = 0;
-// 	if(l == 0){
-// 		nhw=hs;
-// 	}
-// 	while(i<l){
-// 		if(!perteneceH(hs[i],nhw)){
-// 			nhw.push_back(hs[i]);
-// 		}
-// 		i++;
-// 	}
-// 	return nhw;
-// }
-
-// bool vidaValidaF(Vida v, vector<Habilidad> habilidades){
-// 	bool b;
-// 	int lH = habilidades.size();
-// 	int valorRealVida = 100 / (lH + 1);
-// 	b = (v == valorRealVida);
-// 	return b;
-// }
-
-// bool cPegaValidoF(int cP, vector<Habilidad> habilidades){
-// 	bool b;
-// 	if(perteneceH(Atacar, habilidades)){
-// 		b = (cP == (12 / habilidades.size()));
-// 	}else{
-// 		b = (cP == 0);
-// 	}
-// 	return b;
-// }
-
 string tipoHabilidad(Habilidad h){
 	string poder;
 	if(h==Generar){
@@ -83,17 +35,16 @@ vector<Habilidad>& Flor::habilidadesF(){
 }
 
 void Flor::Mostrar(ostream& os){
-	os << "Flor {" << endl;
-	os << "Vida : " << this->_vida << endl;
-	os << "Pega : " << this->_cuantoPega << endl;
-	os << "Habilidades : ";
+	os << "Flor {";
+	os << "Vida : " << this->_vida;
+	os << " ,Pega : " << this->_cuantoPega;
+	os << " ,Habilidades : ";
 	int i = 0;
 	int l = this->_habilidades.size();
 	while(i < l){
 		os << tipoHabilidad(this->_habilidades[i]) << " ";
 		i++;
 	}
-	os << endl;
 	os << "}" << endl;
 }
 

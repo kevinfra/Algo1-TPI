@@ -36,10 +36,10 @@ int Vampiro::cuantoPegaV()
 
 void Vampiro::Mostrar(ostream& os)
 {
-  os << "Vampiro {" << endl;
-  os << "Vida : " << this->_vida << endl;
-  os << "Pega : " << this->_cuantoPega << endl;
-  os << "Clase : " << TipoVampiro(this->_clase) << endl;
+  os << "Vampiro {";
+  os << "Vida : " << this->_vida;
+  os << " ,Pega : " << this->_cuantoPega;
+  os << " ,Clase : " << TipoVampiro(this->_clase);
   os << "}" << endl;
 }
 

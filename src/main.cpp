@@ -170,8 +170,9 @@ int main(){
   //assert(n2.obsesivoCompulsivo() == true);
 
   cout << "El largo de spawning es: " << n.spawningN().size() << endl;
-
-  cout << "Soles de n: " << n.solesN() << endl;
+  cout << endl;
+  cout << "Pasar turno" << endl;
+  cout << "Soles iniciales: " << n.solesN() << endl;
 
   int pases=0;
   while(n.terminado() == false){
@@ -185,7 +186,7 @@ int main(){
     int j = 0;
     while(j<n.floresN().size()){
       n.floresN()[j].flor.Mostrar(cout);
-      cout << "La posicion de F es (" << n.floresN()[j].pos.x << "," << n.floresN()[j].pos.y << ")" << endl;
+      cout << "La posicion de Flor es (" << n.floresN()[j].pos.x << "," << n.floresN()[j].pos.y << ")" << endl;
       j++;
     }
     if(n.floresN().size() == 0){
@@ -194,15 +195,17 @@ int main(){
     j = 0;
     while(j<n.vampirosN().size()){
       n.vampirosN()[j].vampiro.Mostrar(cout);
-      cout << "La posicion de V es (" << n.vampirosN()[j].pos.x << "," << n.vampirosN()[j].pos.y << ")" << endl;
+      cout << "La posicion de Vampiro es (" << n.vampirosN()[j].pos.x << "," << n.vampirosN()[j].pos.y << ")" << endl;
       j++;
     }
     if(n.vampirosN().size() == 0){
       cout << "No hay vampiros" << endl;
     }
+    cout << endl;
+    cout << endl;
   }
 
-  cout << "Cantidad soles despues: " << n.solesN() << endl;
+  cout << "Soles finales: " << n.solesN() << endl;
 
   cout << "El largo de spawning es: " << n.spawningN().size() << endl;
 
@@ -391,7 +394,8 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   //   cout << "Paso " << pases << " veces" << endl;
   // }
 
-
+  ofstream juegoGuardado("juego.txt");
+  j.Guardar(juegoGuardado);
 
 
   // -------------------------TESTS------------------------------
