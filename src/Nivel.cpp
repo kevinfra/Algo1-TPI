@@ -319,36 +319,44 @@ void Nivel::comprarSoles(int n){
 
 void Nivel::Mostrar(ostream& os)
 {
-  os << "Nivel {" << endl;
-  os << "Ancho : " << this->_ancho << endl;
-  os << "Alto : " << this->_alto << endl;
-  os << "Turno : " << this->_turno << endl;
-  os << "Soles : " << this->_soles << endl;
-  os << "Flores : { " << endl;
+  os << "Nivel {";
+  os << "Ancho : " << this->_ancho;
+  os << " ,Alto : " << this->_alto;
+  os << " ,Turno : " << this->_turno;
+  os << " ,Soles : " << this->_soles << "\n";
+  os << "\t Flores en juego : { " << "\n";
   int i = 0;
   int lFlores = this->_flores.size();
   while (i < lFlores){
+    os << "\t \t {";
     this->_flores[i].flor.Mostrar(os);
+    os << "\t \t Posicion: (" << this->_flores[i].pos.x << "," << this->_flores[i].pos.y << ") ";
+    os << "Vida: " << this->_flores[i].vida << "}" << "\n";
     i++;
   }
-  os << "}" << endl;
-  os << "Vampiros : { " << endl;
+  os << "\t }" << "\n";
+  os << "\t Vampiros en juego : { " << "\n";
   int j = 0;
   int lVampiros = this->_vampiros.size();
   while(j < lVampiros){
+    os << " \t \t {";
     this->_vampiros[j].vampiro.Mostrar(os);
+    os << "\t \t Posicion: (" << this->_vampiros[j].pos.x << "," << this->_vampiros[j].pos.y << ") ";
+    os << "Vida: " << this->_vampiros[j].vida << "}" << "\n";
     j++;
   }
-  os << "}" << endl;
-  os << "Spawning : {" << endl;
+  os << "\t }" << "\n";
+  os << "\t Spawning : {" << "\n";
   int s = 0;
   int lSpawning = this->_spawning.size();
   while(s < lSpawning){
+    os << " \t \t {";
     this->_spawning[s].vampiro.Mostrar(os);
+    os << "\t \t Fila: " << this->_spawning[s].fila;
+    os << " ,Turno: " << this->_spawning[s].turno << "}" << "\n";
     s++;
   }
-  os << endl;
-  os << "}" << endl;
+  os << "\t }" << "\n";
   os << "}" << endl;
 }
 

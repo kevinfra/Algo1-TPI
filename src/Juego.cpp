@@ -240,30 +240,33 @@ bool Juego::muyDeExactas()
 void Juego::Mostrar(ostream& os)
 {
 	os << "Juego {" << endl;
-	os << "Flores : {" << endl;
+	os << "\t Flores: {" << endl;
 	int i = 0;
 	int lFlores = this->_flores.size();
 	while (i < lFlores){
+		os << "\t \t";
 		this->_flores[i].Mostrar(os);
 		i++;
 	}
-	os << "}" << endl;
-	os << "Vampiros : {" << endl;
+	os << " \t }" << endl;
+	os << " \t Vampiros: {" << endl;
 	int j = 0;
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
+		os << "\t \t";
 		this->_vampiros[j].Mostrar(os);
 		j++;
 	}
-	os << "}" << endl;
-	os << "Niveles : {" << endl;
-	 int n = 0;
+	os << " \t }" << endl;
+	os << " \t Niveles: {" << endl;
+	int n = 0;
 	int lNiveles = this->_niveles.size();
 	while(n < lNiveles){
+		os << "\t \t";
 		this->_niveles[n].Mostrar(os);
 		n++;
 	}
-	os << "}" << endl;
+	os << "\t }" << endl;
 	os << "}" << endl;
 }
 

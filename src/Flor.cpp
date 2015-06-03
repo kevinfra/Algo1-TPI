@@ -36,9 +36,9 @@ vector<Habilidad>& Flor::habilidadesF(){
 
 void Flor::Mostrar(ostream& os){
 	os << "Flor {";
-	os << "Vida : " << this->_vida;
-	os << " ,Pega : " << this->_cuantoPega;
-	os << " ,Habilidades : ";
+	os << "Vida: " << this->_vida;
+	os << " ,Pega: " << this->_cuantoPega;
+	os << " ,Habilidades: ";
 	int i = 0;
 	int l = this->_habilidades.size();
 	while(i < l){

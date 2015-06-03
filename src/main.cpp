@@ -348,6 +348,10 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
 
   // cout << "vampiro guardado" << endl;
 
+  n.Mostrar(cout);
+
+  j.Mostrar(cout);
+
   cout << "ingrese archivo para guardar el nivel" << endl;
 
   string inNivel;
