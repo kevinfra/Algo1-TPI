@@ -29,10 +29,7 @@ int main(){
 
   vector<Habilidad> hab4;
   hab4.push_back(Explotar);
-  hab4.push_back(Explotar);
   hab4.push_back(Atacar);
-  hab4.push_back(Generar);
-  hab4.push_back(Generar);
   hab4.push_back(Generar);
 
 
@@ -110,8 +107,6 @@ int main(){
   ofstream guardarVampiro("guardarVampiro.txt");
   v1.Guardar(guardarVampiro);
   ifstream cargarVampiro("guardarVampiro.txt");
-  //v1.Cargar(cargarVampiro);
-
 
   //--------------Fin test vampiro--------------
   //--------------Test Nivel--------------------
@@ -162,42 +157,39 @@ int main(){
   cout << "El largo de spawning es: " << n.spawningN().size() << endl;
   cout << endl;
   cout << "Pasar turno" << endl;
-  cout << "Soles iniciales: " << n.solesN() << endl;
 
   int pases=0;
   while(n.terminado() == false){
     n.pasarTurno();
-    pases++;
-    cout << "Turno: " << pases <<  endl;
-    cout << "Soles: " << n.solesN() << endl;
-    cout << "El largo de flores es: " << n.floresN().size() << endl;
-    cout << "El largo de spawning es: " << n.spawningN().size() << endl;
-    cout << "El largo de vampiros es: " << n.vampirosN().size() << endl;
-    int j = 0;
-    while(j<n.floresN().size()){
-      n.floresN()[j].flor.Mostrar(cout);
-      cout << "La posicion de Flor es (" << n.floresN()[j].pos.x << "," << n.floresN()[j].pos.y << ")" << endl;
-      j++;
-    }
-    if(n.floresN().size() == 0){
-      cout << "No hay flores" << endl;
-    }
-    j = 0;
-    while(j<n.vampirosN().size()){
-      n.vampirosN()[j].vampiro.Mostrar(cout);
-      cout << "La posicion de Vampiro es (" << n.vampirosN()[j].pos.x << "," << n.vampirosN()[j].pos.y << ")" << endl;
-      j++;
-    }
-    if(n.vampirosN().size() == 0){
-      cout << "No hay vampiros" << endl;
-    }
-    cout << endl;
+    n.Mostrar(cout);
     cout << endl;
   }
 
-  cout << "Soles finales: " << n.solesN() << endl;
+  string inNivel = "nGuardado.txt";
 
-  cout << "El largo de spawning es: " << n.spawningN().size() << endl;
+  ofstream guardadon(inNivel);
+
+  n.Guardar(guardadon);
+
+  n.agregarFlor(f1, Posicion(3,3));
+
+  string solo="nGuardado.txt";
+
+  ifstream asds(solo);
+
+  Nivel nivelCargado;
+  nivelCargado.Cargar(asds);
+
+  cout << "Nivel cargado" << endl;
+
+  assert (nivelCargado.anchoN() == 10);
+  assert (nivelCargado.altoN() == 10);
+  assert (nivelCargado.turnoN() == 12);
+  assert (nivelCargado.solesN() == 135);
+  assert (nivelCargado.floresN().size() == 1);
+  assert (nivelCargado.vampirosN().size() == 6);
+  assert (nivelCargado.spawningN().size() == 0);
+
 
   //---------------Fin test Nivel---------------
   //---------------Test Juego-------------------
@@ -258,7 +250,7 @@ int main(){
   j.agregarNivel(n7,4);
 
 
-cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
+  cout << "Largo vampiros de nivelesJ[4] es" << j.nivelesJ()[4].vampirosN().size() << endl;
   assert(j.nivelesJ()[4].vampirosN().size() == 4);
   j.altoCheat(4);
   assert(j.nivelesJ()[4].vampirosN().size() == 1);
@@ -315,55 +307,21 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
 
   assert(j5.muyDeExactas() == true);
 
-  n.Mostrar(cout);
-
-  j.Mostrar(cout);
-
-  string inNivel = "nGuardado.txt";
-
-  ofstream guardadon(inNivel);
-
-  n.Guardar(guardadon);
-
-  n.agregarFlor(f1, Posicion(3,3));
-
-  cout << "el largo de flores es: " << n.floresN().size() << endl;
-  cout << "el largo de spawning es: " << n.spawningN().size() << endl;
-  cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
-
   ofstream juegoGuardado("juego.txt");
   j.Guardar(juegoGuardado);
 
-  cout << "juego guardado" << endl;
-
-  string solo="nGuardado.txt";
-
-  ifstream asds(solo);
-
-  Nivel nivelCargado;
-  nivelCargado.Cargar(asds);
-
-  cout << "nivel cargado" << endl;
-
-  assert (nivelCargado.anchoN() == 10);
-  assert (nivelCargado.altoN() == 10);
-  assert (nivelCargado.turnoN() == 12);
-  assert (nivelCargado.solesN() == 135);
-  assert (nivelCargado.floresN().size() == 1);
-  assert (nivelCargado.vampirosN().size() == 6);
-  assert (nivelCargado.spawningN().size() == 0);
-
+  cout << "Juego guardado" << endl;
 
   string juegoPCarga="juego.txt";
   ifstream juegoCargado(juegoPCarga);
   Juego juegoLoaded;
   juegoLoaded.Cargar(juegoCargado);
 
-  cout << "cargo juego" << endl;
+  cout << "Cargo juego" << endl;
 
   assert (juegoLoaded.floresJ().size() == 3);
   assert (juegoLoaded.vampirosJ().size() == 4);
-  assert (juegoLoaded.nivelesJ().size() == 2);
+  assert (juegoLoaded.nivelesJ().size() == 5);
 
   return 0;
 }
