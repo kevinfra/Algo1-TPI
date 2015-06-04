@@ -1,0 +1,1 @@
+{ J [ { F 33 6 [ Atacar Explotar ] } { F 33 0 [ Generar Explotar ] } ] [ { V Desviado 50 8 } { V Caminante 30 7 } ] [ { N 5 5 3 56 [ ( { F 33 6 [ Atacar Explotar ] } ( 2 3 ) 10 ) ( { F 33 0 [ Generar Explotar ] } ( 2 5 ) 33 ) ] [ ( { V Desviado 50 8 } ( 4 5 ) 10 ) ] [ ( { V Caminante 30 7 } 2 5 ) ] } ] }

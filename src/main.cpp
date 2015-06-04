@@ -54,7 +54,6 @@ int main(){
 
   assert(f1.vidaF() == 33);
   assert(f1.cuantoPegaF() == 0);
-  //assert(f4.habilidadesF().size() == 0);
 
   cout << "f1 size : " << f1.habilidadesF().size() << endl;
   cout << "f2 size : " << f2.habilidadesF().size() << endl;
@@ -65,13 +64,11 @@ int main(){
   ofstream guardarFlor("guardarFlor.txt");
   f1.Guardar(guardarFlor);
   ifstream cargarFlor("guardarFlor.txt");
-  //f1.Cargar(cargarFlor);
 
   f4.Mostrar(cout);
   ofstream guardarFlor2("guardarFlor2.txt");
   f4.Guardar(guardarFlor2);
   ifstream cargarFlor2("guardarFlor2.txt");
-  //f4.Cargar(cargarFlor2);
 
   //-------------Fin test Flor------------------
   //-------------Test Vampiro-------------------
@@ -161,13 +158,6 @@ int main(){
   n2.agregarFlor(f5, Posicion(5,15));
   n2.agregarFlor(f8, Posicion(2,15));
   assert(n2.obsesivoCompulsivo() == false);
-
-  //n2.agregarFlor(f3, Posicion(1,15));
-  //n2.agregarFlor(f1, Posicion(2,15));
-  //n2.agregarFlor(f2, Posicion(3,15));
-  //n2.agregarFlor(f4, Posicion(4,15));
-
-  //assert(n2.obsesivoCompulsivo() == true);
 
   cout << "El largo de spawning es: " << n.spawningN().size() << endl;
   cout << endl;
@@ -324,59 +314,16 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   j5.agregarNivel(n2Vacio,2);
 
   assert(j5.muyDeExactas() == true);
-  // cout << "ingrese archivo para guardar flor" << endl;
-
-  // string in;
-
-  // cin >> in;
-
-  // ofstream guardado(in);
-
-  // f.Guardar(guardado);
-
-  // cout << "flor guardada" << endl;
-
-  // cout << "ingrese archivo para guardar Vampiro" << endl;
-
-  // string inv;
-
-  // cin >> inv;
-
-  // ofstream guardadov(inv);
-
-  // v.Guardar(guardadov);
-
-  // cout << "vampiro guardado" << endl;
 
   n.Mostrar(cout);
 
   j.Mostrar(cout);
 
-  cout << "ingrese archivo para guardar el nivel" << endl;
-
-  string inNivel;
-
-  cin >> inNivel;
+  string inNivel = "nGuardado.txt";
 
   ofstream guardadon(inNivel);
 
   n.Guardar(guardadon);
-
-  cout << "Nivel guardado" << endl;
-
-  // cout << "Nivel guardado" << endl;
-
-  // cout << "ingrese nombre del archivo para guardar juego" << endl;
-
-  // string inJ;
-
-  // cin >> inJ;
-
-  // ofstream guardarJ(inJ);
-
-  // j.Guardar(guardarJ);
-
-  // cout << "juego guardado" << endl;
 
   n.agregarFlor(f1, Posicion(3,3));
 
@@ -384,61 +331,19 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   cout << "el largo de spawning es: " << n.spawningN().size() << endl;
   cout << "el largo de vampiros es: " << n.vampirosN().size() << endl;
 
-
-  // f.Mostrar(cout);
-  // v.Mostrar(cout);
-  // n.Mostrar(cout);
-  // j.Mostrar(cout);
-  // // int pases=0;
-
-  // int pases=0;
-  // while(n.terminado() == false){
-  //   n.pasarTurno();
-  //   pases++;
-  //   cout << "Paso " << pases << " veces" << endl;
-  // }
-
   ofstream juegoGuardado("juego.txt");
   j.Guardar(juegoGuardado);
 
+  cout << "juego guardado" << endl;
 
-  // -------------------------TESTS------------------------------
-  //descomentar de acá para abajo para correrlos
-  /*
-  cout << "Test Flor" << endl;
-  Flor f1(100 / 3,6,hab2);
-  assert (f1.vidaF() == 100/3);
-  assert (f1.cuantoPegaF() == 6);
-  assert (f1.habilidadesF().size() == 2);
-  assert (f1.habilidadesF()[0] == 1);
-  assert (f1.habilidadesF()[1] == 0);
-  f.Mostrar(cout);
-  f.Guardar(os);
-  cout << "Flor esta bien" << endl;
-
-  cout << "Test Vampiro" << endl;
-  Vampiro v1(Caminante,50,30);
-  assert (v1.claseV == 0);
-  assert (v1.vidaV() == 50);
-  assert (v1.cuantoPegaV() == 30);
-  v.Mostrar(cout);
-  v.Guardar(os);
-  cout << "Vampiro esta bien" << endl;
-
-  cout << "Test nivel" << endl;
-  Nivel n1(10,20,0,)
-*/
-  string solo;
-
-  cout << "Ingrese el nombre del archivo a cargar nivel" << endl;
-
-  cin >> solo;
+  string solo="nGuardado.txt";
 
   ifstream asds(solo);
 
   Nivel nivelCargado;
   nivelCargado.Cargar(asds);
 
+  cout << "nivel cargado" << endl;
 
   assert (nivelCargado.anchoN() == 10);
   assert (nivelCargado.altoN() == 10);
@@ -447,6 +352,18 @@ cout << "largo vampiros " << j.nivelesJ()[4].vampirosN().size() << endl;
   assert (nivelCargado.floresN().size() == 1);
   assert (nivelCargado.vampirosN().size() == 6);
   assert (nivelCargado.spawningN().size() == 0);
+
+
+  string juegoPCarga="juego.txt";
+  ifstream juegoCargado(juegoPCarga);
+  Juego juegoLoaded;
+  juegoLoaded.Cargar(juegoCargado);
+
+  cout << "cargo juego" << endl;
+
+  assert (juegoLoaded.floresJ().size() == 3);
+  assert (juegoLoaded.vampirosJ().size() == 4);
+  assert (juegoLoaded.nivelesJ().size() == 2);
 
   return 0;
 }

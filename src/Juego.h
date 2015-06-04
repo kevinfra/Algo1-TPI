@@ -35,6 +35,6 @@ public:
 
 	void Mostrar(std::ostream& os);
 	void Guardar(std::ostream& os);
-	void Cargar(std::iostream& is);
+	void Cargar(std::istream& is);
 
 };

@@ -277,25 +277,28 @@ void Juego::Guardar(ostream& os){
 	while (i < lFlores){
 		this->_flores[i].Guardar(os);
 		i++;
+		os << " " ;
 	}
-	os << " ] [ ";
+	os << "] [ ";
 	int j = 0;
 	int lVampiros = this->_vampiros.size();
 	while(j < lVampiros){
 		this->_vampiros[j].Guardar(os);
 		j++;
+		os << " " ;
 	}
-	os << " ] [ ";
+	os << "] [ ";
 	int n = 0;
 	int lNiveles = this->_niveles.size();
 	while(n < lNiveles){
 		this->_niveles[n].Guardar(os);
 		n++;
+		os << " " ;
 	}
-	os << " ] }" << endl;
+	os << "] }" << endl;
 }
 
-void Juego::Cargar(iostream& is)
+void Juego::Cargar(istream& is)
 {
 	string juego;
 	getline(is, juego, 'J');
