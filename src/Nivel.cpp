@@ -3,15 +3,6 @@
 
 using namespace std;
 
-bool noHayFlorEnPos(vector<FlorEnJuego> flores, Posicion pos){
-  int l = flores.size();
-  int v = 0;
-  while(v < l && !(flores[v].pos.x == pos.x && flores[v].pos.y == pos.y)){
-    v++;
-  }
-  return v == l;
-}
-
 int danoFlor(FlorEnJuego flor, vector<VampiroEnJuego> vampiros){
   int cp = 0;
   int v = 0;
