@@ -11,7 +11,11 @@ string TipoVampiro(ClaseVampiro clase)
   }
 }
 
-Vampiro::Vampiro(){}
+Vampiro::Vampiro(){
+	this->_vida = 1;
+	this->_cuantoPega = 1;
+	this->_clase = Caminante;
+}
 
 Vampiro::Vampiro(ClaseVampiro cv, Vida v, int cP){
   this->_clase = cv;

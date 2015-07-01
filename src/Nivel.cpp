@@ -51,23 +51,6 @@ vector<FlorEnJuego> floresVivas(vector<FlorEnJuego> flores, vector<VampiroEnJueg
   return nuevaListaFlores;
 }
 
-void floresIguales(vector<FlorEnJuego>& preFlores, vector<FlorEnJuego> flores){
-  int v = 0;
-  int lFlores = flores.size();
-  int lPreFlores = preFlores.size();
-  //Primero vacio la lista de pre(flores)
-  while(v < lPreFlores){
-    preFlores.pop_back();
-    v++;
-  }
-  v = 0 ;
-  //Ahora empiezo a llenarla con los elementos de la lista flores que quiero
-  while(v < lFlores){
-    preFlores.push_back(flores[v]);
-    v++;
-  }
-}
-
 bool enMira(FlorEnJuego flor, VampiroEnJuego vamp){
   return ((vamp.pos.y == flor.pos.y) && (vamp.pos.x >= flor.pos.x));
 }
@@ -75,7 +58,7 @@ bool enMira(FlorEnJuego flor, VampiroEnJuego vamp){
 bool noIntercepta(VampiroEnJuego vamp, FlorEnJuego flor, vector<VampiroEnJuego> vampiros){
   int v = 0;
   int largoVampiros = vampiros.size();
-  while(v < largoVampiros && !(enMira(flor, vampiros[v]) && (vampiros[v].pos.x <= vamp.pos.x))){
+  while(v < largoVampiros && !(enMira(flor, vampiros[v]) && (vampiros[v].pos.x < vamp.pos.x))){
     v++;
   }
   return v == largoVampiros;
@@ -159,20 +142,16 @@ int solesGenerados(vector<FlorEnJuego> preFlores, int preSoles){
 }
 
 void actualizarSpawning(vector<VampiroEnEspera>& spaw, int turno){
-  vector<VampiroEnEspera> preSpaw = spaw;
+  vector<VampiroEnEspera> newSpaw;
   int v = 0;
   int largoSpaw = spaw.size();
   while(v < largoSpaw){
-    spaw.pop_back();
-    v++;
-  }
-  v = 0;
-  while(v < largoSpaw){
-    if(preSpaw[v].turno > turno){
-      spaw.push_back(preSpaw[v]);
+    if(spaw[v].turno > turno){
+      newSpaw.push_back(spaw[v]);
     }
     v++;
   }
+  spaw = newSpaw;
 }
 
 bool vampiroEnColumnaCero(vector<VampiroEnJuego> vampiros){
@@ -279,8 +258,8 @@ void Nivel::agregarFlor(Flor f, Posicion p){
 void Nivel::pasarTurno(){
     this->_turno++;
     vector<FlorEnJuego> preFlores;
-    floresIguales(preFlores, this->_flores);
-    floresIguales(this->_flores, floresVivas(this->_flores, this->_vampiros));
+    preFlores = this->_flores;
+    this->_flores = floresVivas(this->_flores, this->_vampiros);
     this->_vampiros = vampirosVivos(preFlores, this->_vampiros);
     this->_soles = solesGenerados(preFlores, this->_soles);
     int vs=0;

@@ -16,6 +16,16 @@ int main(){
   //-----------------Test Flor-----------------
   cout << "Test Flor" << endl;
 
+  //Test constructor flor vacia
+
+  Flor fVacia;
+
+  assert(fVacia.vidaF() == 100);
+  assert(fVacia.cuantoPegaF() == 0);
+  assert(fVacia.habilidadesF().size() == 0);
+
+  fVacia.Mostrar(cout);
+
   vector<Habilidad> hab1;
   hab1.push_back(Atacar);
 
@@ -69,7 +79,19 @@ int main(){
 
   //-------------Fin test Flor------------------
   //-------------Test Vampiro-------------------
+
+
+  //Test de constructor vacio de vampiro
+
   cout << "Test vampiro" << endl;
+
+  Vampiro vVacio;
+
+  assert(vVacio.vidaV() == 1);
+  assert(vVacio.cuantoPegaV() == 1);
+  assert(vVacio.claseV() == Caminante);
+
+  vVacio.Mostrar(cout);
 
   Vampiro v1(Desviado,50,50);
 

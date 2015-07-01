@@ -14,7 +14,10 @@ string tipoHabilidad(Habilidad h){
 	return poder;
 }
 
-Flor::Flor(){}
+Flor::Flor(){
+	this->_vida = 100;
+	this->_cuantoPega = 0;
+}
 
 Flor::Flor(Vida v, int cP, vector<Habilidad> hs){
 	this->_habilidades = hs;
