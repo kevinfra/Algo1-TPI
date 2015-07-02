@@ -1,4 +1,4 @@
-﻿#include "Nivel.h"
+#include "Nivel.h"
 #include <cmath>
 
 using namespace std;
