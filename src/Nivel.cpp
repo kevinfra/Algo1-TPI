@@ -212,7 +212,12 @@ bool hayPatron(vector<FlorEnJuego> floresOrdenadas){
   return largoF <= 1 || v == largoF;
 }
 
-Nivel::Nivel(){}
+Nivel::Nivel(){
+	this->_ancho = 1;
+	this->_alto = 1;
+	this->_soles = 0;
+	this->_turno = 0;
+}
 
 Nivel::Nivel(int ancho, int alto, int soles, vector<VampiroEnEspera>& spawninglist){
   this->_ancho = ancho;
